@@ -9,8 +9,8 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
 
     event.preventDefault();
 
-    navigate(link);
     onClick(labelRef.current);
+    navigate(link);
   }
 
   return (

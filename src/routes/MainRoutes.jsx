@@ -10,9 +10,9 @@ const MainRoutes = () => {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/liked" element={<LikedSongs />}/>
+        <Route path="/liked" element={<LikedSongs />} />
       </Route>
-      <Route path="*" element={<NotFoundPage/>}/>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
