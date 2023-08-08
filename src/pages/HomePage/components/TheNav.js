@@ -1,58 +1,63 @@
-import { MIN_DESKTOP_WIDTH } from '../utils';
+import { MIN_DESKTOP_WIDTH } from "../utils";
 import {
   HomeIcon,
   MagnifyingGlassIcon,
   ViewColumnsIcon,
   PlusCircleIcon,
   HeartIcon,
-} from '@heroicons/react/24/outline';
-import NavItem from './NavItem';
+} from "@heroicons/react/24/outline";
+import NavItem from "./NavItem";
 
 const activeNavItemClasses =
-  'flex items-center text-white bg-[#282828] mx-2 px-4 py-2 rounded';
+  "flex items-center text-white bg-[#282828] mx-2 px-4 py-2 rounded";
 const navItemClasses =
-  'flex items-center hover:text-white mx-2 px-4 py-2 rounded duration-300';
+  "flex items-center hover:text-white mx-2 px-4 py-2 rounded duration-300";
 
 function TheNav({ showPopover }) {
   const navItems = [
     {
-      label: 'Home',
+      label: "Home",
       classes: activeNavItemClasses,
       icon: <HomeIcon className="h-6 w-6" />,
+      link: "/",
     },
     {
-      label: 'Search',
+      label: "Search",
       classes: navItemClasses,
       icon: <MagnifyingGlassIcon className="h-6 w-6" />,
+      link: "/",
     },
     {
-      label: 'Your Library',
+      label: "Your Library",
       classes: `${navItemClasses} mb-6`,
       icon: <ViewColumnsIcon className="h-6 w-6" />,
+      link: "/",
       action: (target) => {
         showPopover(
-          'Enjoy Your Library',
-          'Log in to see saved songs, podcasts, artists, and playlists in Your Library.',
+          "Enjoy Your Library",
+          "Log in to see saved songs, podcasts, artists, and playlists in Your Library.",
           target
         );
       },
     },
     {
-      label: 'Create Playlist',
+      label: "Create Playlist",
       classes: navItemClasses,
       icon: <PlusCircleIcon className="h-6 w-6" />,
+      link: "/",
       action: (target) => {
         showPopover(
-          'Create a playlist',
-          'Log in to create and share playlists.',
+          "Create a playlist",
+          "Log in to create and share playlists.",
           target
         );
       },
     },
     {
-      label: 'Liked Songs',
+      label: "Liked Songs",
       classes: navItemClasses,
       icon: <HeartIcon className="h-6 w-6" />,
+      link: "/liked",
       action: (target) => {
         let offset = null;
 
@@ -66,7 +71,7 @@ function TheNav({ showPopover }) {
         }
 
         showPopover(
-          'Enjoy your Liked Songs',
+          "Enjoy your Liked Songs",
           "Log in to see all the songs you've liked in one easy playlist.",
           target,
           offset
@@ -77,8 +82,14 @@ function TheNav({ showPopover }) {
 
   return (
     <nav>
-      {navItems.map(({ classes, icon, label, action }) => (
-        <NavItem key={label} classes={classes} icon={icon} onClick={action}>
+      {navItems.map(({ classes, icon, label, link, action }) => (
+        <NavItem
+          key={label}
+          classes={classes}
+          icon={icon}
+          onClick={action}
+          link={link}
+        >
           {label}
         </NavItem>
       ))}

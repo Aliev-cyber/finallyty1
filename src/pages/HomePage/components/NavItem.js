@@ -1,14 +1,16 @@
-import { useRef } from 'react';
+import { useRef } from "react";
+import { useNavigate } from "react-router";
 
-function NavItem({ classes, icon, onClick, children: label }) {
+function NavItem({ classes, icon, onClick, link, children: label }) {
   const labelRef = useRef();
-
+  const navigate = useNavigate();
   function handleClick(event) {
     if (!onClick) return;
 
     event.preventDefault();
 
     onClick(labelRef.current);
+    navigate(link);
   }
 
   return (
