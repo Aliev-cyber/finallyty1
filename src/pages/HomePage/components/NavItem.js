@@ -5,12 +5,12 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
   const labelRef = useRef();
   const navigate = useNavigate();
   function handleClick(event) {
-    if (!onClick) return;
 
     event.preventDefault();
 
     navigate(link);
     onClick(labelRef.current);
+
   }
 
   return (
