@@ -3,6 +3,8 @@ import MainLayout from "../layouts/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import LikedSongs from "../pages/LikedSongs";
+import AuthPage from "../pages/AuthPage";
+import LoginPage from "../pages/LoginPage";
 
 const MainRoutes = () => {
   return (
@@ -11,6 +13,12 @@ const MainRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/liked" element={<LikedSongs />} />
       </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/login" element={<LoginPage />} />
+
+
     </Routes>
   );
 };
