@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import spotifyImg from "../Photos/spotify-icon.svg";
 
 function Copyright(props) {
   return (
@@ -52,8 +53,19 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h4" color="white">
-            Войти в Spotify
+          <Typography
+            sx={{ display: "flex", gap: "5px" }}
+            component="h1"
+            variant="h4"
+            color="white"
+          >
+            Войти в{" "}
+            <img
+              src={spotifyImg}
+              alt="spotify logo"
+              style={{ width: "40px" }}
+            />{" "}
+            Spotify
           </Typography>
           <Box
             component="form"
