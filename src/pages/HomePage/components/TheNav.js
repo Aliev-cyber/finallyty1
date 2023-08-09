@@ -25,7 +25,7 @@ function TheNav({ showPopover }) {
       label: "Search",
       classes: navItemClasses,
       icon: <MagnifyingGlassIcon className="h-6 w-6" />,
-      link: "/",
+      link: "/search",
     },
     {
       label: "Your Library",
