@@ -2,10 +2,12 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   Bars3Icon,
-} from '@heroicons/react/24/outline';
-import BaseButton from './BaseButton';
+} from "@heroicons/react/24/outline";
+import BaseButton from "./BaseButton";
+import { useNavigate } from "react-router-dom";
 
 function TheHeader() {
+  const navigate = useNavigate();
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
       <div className="flex">
@@ -23,10 +25,15 @@ function TheHeader() {
         </a>
       </div>
       <div>
-        <BaseButton classes="text-gray-400 hover:text-white">
+        <BaseButton
+          onClick={() => navigate("/auth")}
+          classes="text-gray-400 hover:text-white"
+        >
           Sign up
         </BaseButton>
-        <BaseButton primary>Log in</BaseButton>
+        <BaseButton onClick={() => navigate("/login")} primary>
+          Log in
+        </BaseButton>
       </div>
     </header>
   );
