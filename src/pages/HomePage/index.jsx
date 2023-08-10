@@ -2,7 +2,6 @@ import { useRef } from "react";
 import useEvent from "./hooks/useEvent";
 import BasePopover from "./components/BasePopover";
 import BaseToast from "./components/BaseToast";
-import TheHeader from "./components/TheHeader";
 import TheMain from "./components/TheMain";
 import TheRegistration from "./components/TheRegistration";
 

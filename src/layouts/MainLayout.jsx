@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { Outlet } from "react-router-dom";
-import TheSidebar from "../pages/HomePage/components/TheSidebar";
-import TheSidebarOverlay from "../pages/HomePage/components/TheSidebarOverlay";
+import TheSidebar from "../components/TheSidebar";
+import TheSidebarOverlay from "../components/TheSidebarOverlay";
 import useEvent from "../pages/HomePage/hooks/useEvent";
-import TheHeader from "../pages/HomePage/components/TheHeader";
+import TheHeader from "../components/TheHeader";
 
 const MainLayouts = () => {
   const popoverRef = useRef();
