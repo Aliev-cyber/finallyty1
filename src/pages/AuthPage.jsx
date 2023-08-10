@@ -11,8 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
-import { useAuthContext } from "../AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -178,7 +179,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link sx={{ color: "white" }} href="#" variant="body2">
+                <Link sx={{ color: "white" }} component={RouterLink} to="/login"  variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

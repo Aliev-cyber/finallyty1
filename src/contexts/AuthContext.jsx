@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
-import { BASE_URL } from "./utils/consts";
-import $axios from "./utils/axios";
+import { BASE_URL } from "../utils/consts";
+import $axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 const authContext = createContext();
@@ -29,12 +29,12 @@ const AuthContext = ({ children }) => {
         `${BASE_URL}/login/`,
         credentials
       );
-
+      
       console.log(tokens);
 
       localStorage.setItem("tokens", JSON.stringify(tokens));
 
-      const { data } = await $axios.get(`${BASE_URL}/profile/`);
+      const { data } = await $axios.get(`${BASE_URL}/login/`);
 
       setUser(data);
     } catch (e) {
@@ -51,7 +51,7 @@ const AuthContext = ({ children }) => {
     try {
       const tokens = JSON.parse(localStorage.getItem("tokens"));
       if (tokens) {
-        const { data } = await $axios.get(`${BASE_URL}/profile/`);
+        const { data } = await $axios.get(`${BASE_URL}/login/`);
         setUser(data);
       } else {
         setUser(null);
