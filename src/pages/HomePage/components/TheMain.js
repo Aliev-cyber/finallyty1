@@ -71,12 +71,6 @@ function TheMain({ showToast, toggleScrolling }) {
                 <a href="/">Lorem ipsum dolor sit</a>
               </h2>
             </div>
-            <a
-              onClick={() => navigate("/sell")}
-              className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
-            >
-              See all
-            </a>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
             {playlists.map((playlist) => (
@@ -98,12 +92,6 @@ function TheMain({ showToast, toggleScrolling }) {
                 <a href="/">Lorem ipsum dolor sit</a>
               </h2>
             </div>
-            <a
-              onClick={() => navigate("/sell")}
-              className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
-            >
-              See all
-            </a>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
             {playlists.map((playlist) => (
@@ -125,12 +113,6 @@ function TheMain({ showToast, toggleScrolling }) {
                 <a href="/">Lorem ipsum dolor sit</a>
               </h2>
             </div>
-            <a
-              onClick={() => navigate("/sell")}
-              className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
-            >
-              See all
-            </a>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
             {playlists.map((playlist) => (
