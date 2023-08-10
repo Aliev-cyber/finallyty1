@@ -12,6 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
 import { useAuthContext } from "../AuthContext";
+import { Navigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -34,18 +35,23 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const { register } = useAuthContext();
+  const { user, register } = useAuthContext();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log(data);
     register({
+      username: data.get("user_name"),
       first_name: data.get("first_name"),
       last_name: data.get("last_name"),
       email: data.get("email"),
       password: data.get("password"),
+      password_confirmation: data.get("password_confirm")
     });
   };
-
+	if (user) {
+		return <Navigate to="/" />;
+	}
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -73,10 +79,6 @@ export default function SignUp() {
             />
             Spotify
           </Typography>
-          <Typography component="h1" variant="h5">
-            Зарегистрируйтесь и слушайте бесплатно
-          </Typography>
-
           <Box
             component="form"
             noValidate
@@ -111,6 +113,17 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="user_name"
+                  placeholder="User Name"
+                  name="user_name"
+                  autoComplete="user_name"
+                  sx={{ background: "white" }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
                   placeholder="Email Address"
                   name="email"
@@ -127,6 +140,18 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  sx={{ background: "white" }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password_confirm"
+                  placeholder="Password"
+                  type="password"
+                  id="password_confirm"
+                  autoComplete="confirm-password"
                   sx={{ background: "white" }}
                 />
               </Grid>

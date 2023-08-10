@@ -3,7 +3,7 @@ import {
   ChevronRightIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
-import BaseButton from "./BaseButton";
+import BaseButton from "../pages/HomePage/components/BaseButton";
 import { useNavigate } from "react-router-dom";
 
 function TheHeader() {
@@ -24,6 +24,12 @@ function TheHeader() {
           <ChevronRightIcon className="h-6 w-6" />
         </a>
       </div>
+      <BaseButton
+          onClick={() => navigate("/add")}
+          classes="text-gray-400 hover:text-white"
+        >
+          Add Your Song
+        </BaseButton>
       <div>
         <BaseButton
           onClick={() => navigate("/auth")}
