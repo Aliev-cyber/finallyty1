@@ -102,6 +102,20 @@ export default function SignIn() {
                 borderRadius: "4px",
               }}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="repeat-password"
+              placeholder="Repeat-password"
+              type="repeat-password"
+              id="repeat-password"
+              autoComplete="current-password"
+              style={{
+                background: "white",
+                borderRadius: "4px",
+              }}
+            />
             <FormControlLabel
               control={
                 <Checkbox
