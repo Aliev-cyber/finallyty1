@@ -78,27 +78,34 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              // label=""
               name="email"
               autoComplete="email"
               autoFocus
-              style={{ background: "white" }}
+              placeholder="Email Address"
+              style={{
+                background: "white",
+                borderRadius: "4px",
+              }}
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              placeholder="Password"
               type="password"
               id="password"
               autoComplete="current-password"
-              style={{ background: "white" }}
+              style={{
+                background: "white",
+                borderRadius: "4px",
+              }}
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  style={{ color: "white" }}
+                  style={{ color: "#00e676" }}
                   value="remember"
                   color="primary"
                 />

@@ -6,6 +6,7 @@ import LikedSongs from "../pages/LikedSongs";
 import AuthPage from "../pages/AuthPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import SellAll from "../SellAll";
 
 const MainRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const MainRoutes = () => {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/sell" element={<SellAll />} />
     </Routes>
   );
 };

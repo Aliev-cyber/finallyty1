@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Playlist from "./Playlist";
 
 const playlists = [
@@ -58,6 +59,7 @@ const playlists = [
 ];
 
 function TheMain({ showToast, toggleScrolling }) {
+  const navigate = useNavigate();
   return (
     <main className="text-white relative">
       <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div>
@@ -70,7 +72,7 @@ function TheMain({ showToast, toggleScrolling }) {
               </h2>
             </div>
             <a
-              href="/"
+              onClick={() => navigate("/sell")}
               className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
             >
               See all
@@ -97,7 +99,7 @@ function TheMain({ showToast, toggleScrolling }) {
               </h2>
             </div>
             <a
-              href="/"
+              onClick={() => navigate("/sell")}
               className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
             >
               See all
@@ -124,7 +126,7 @@ function TheMain({ showToast, toggleScrolling }) {
               </h2>
             </div>
             <a
-              href="/"
+              onClick={() => navigate("/sell")}
               className="uppercase text-xs font-semibold tracking-widest hover:underline text-[#b3b3b3] leading-6"
             >
               See all

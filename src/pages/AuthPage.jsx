@@ -87,7 +87,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  placeholder="First Name"
                   autoFocus
                   sx={{ background: "white" }}
                 />
@@ -97,7 +97,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  placeholder="Last Name"
                   name="lastName"
                   autoComplete="family-name"
                   sx={{ background: "white" }}
@@ -108,7 +108,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  placeholder="Email Address"
                   name="email"
                   autoComplete="email"
                   sx={{ background: "white" }}
@@ -119,7 +119,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -128,7 +128,14 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" />}
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      style={{
+                        color: "#00e676",
+                      }}
+                    />
+                  }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
