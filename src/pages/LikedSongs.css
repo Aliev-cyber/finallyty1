@@ -61,6 +61,7 @@
 
 .song-details {
   flex-grow: 1;
+  color: white;
 }
 
 .song-title {
