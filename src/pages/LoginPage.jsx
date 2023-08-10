@@ -13,6 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Copyright(props) {
   return (
@@ -32,15 +35,18 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const {user, login} = useAuthContext()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    login({
+      username: data.get("username"),
       password: data.get("password"),
     });
   };
-
+	if (user) {
+		return <Navigate to="/" />;
+	}
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -59,7 +65,7 @@ export default function SignIn() {
             variant="h4"
             color="white"
           >
-            Войти в{" "}
+            Sign in{" "}
             <img
               src={spotifyImg}
               alt="spotify logo"
@@ -77,12 +83,11 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              // label=""
-              name="email"
-              autoComplete="email"
+              id="username"
+              name="username"
+              autoComplete="username"
               autoFocus
-              placeholder="Email Address"
+              placeholder="User Name"
               style={{
                 background: "white",
                 borderRadius: "4px",
@@ -96,20 +101,6 @@ export default function SignIn() {
               placeholder="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
-              style={{
-                background: "white",
-                borderRadius: "4px",
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="repeat-password"
-              placeholder="Repeat-password"
-              type="repeat-password"
-              id="repeat-password"
               autoComplete="current-password"
               style={{
                 background: "white",
@@ -138,12 +129,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2" style={{ color: "white" }}>
-                  Forgot password?
+                <Link component={RouterLink} to="/404poka_shto" variant="body2" style={{ color: "white" }}>
+                  {"Forgot password?"}
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2" style={{ color: "white" }}>
+                <Link component={RouterLink} to="/auth" variant="body2" style={{ color: "white" }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
