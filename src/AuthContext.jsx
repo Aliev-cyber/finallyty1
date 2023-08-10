@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
-import { BASE_URL } from "../utils/consts";
-import $axios from "../utils/axios";
+import { BASE_URL } from "./utils/consts";
+import $axios from "./utils/axios";
 import { useNavigate } from "react-router-dom";
 
 const authContext = createContext();
@@ -16,7 +16,7 @@ const AuthContext = ({ children }) => {
 
   async function register(credentials) {
     try {
-      await axios.post(`${BASE_URL}/account/register/`, credentials);
+      await axios.post(`${BASE_URL}/register/`, credentials);
     } catch (e) {
       console.log(e);
     }
@@ -33,7 +33,7 @@ const AuthContext = ({ children }) => {
 
       localStorage.setItem("tokens", JSON.stringify(tokens));
 
-      const { data } = await $axios.get(`${BASE_URL}/account/profile`);
+      const { data } = await $axios.get(`${BASE_URL}/profile/`);
 
       setUser(data);
     } catch (e) {

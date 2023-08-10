@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
+import { useAuthContext } from "../AuthContext";
 
 function Copyright(props) {
   return (
@@ -33,10 +34,13 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const { register } = useAuthContext();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    register({
+      first_name: data.get("first_name"),
+      last_name: data.get("last_name"),
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -82,12 +86,12 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="first_name"
+                  name="first_name"
                   required
                   fullWidth
-                  id="firstName"
-                  placeholder="First Name"
+                  id="first_name"
+                  placeholder="FirstName"
                   autoFocus
                   sx={{ background: "white" }}
                 />
@@ -96,10 +100,10 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="last_name"
                   placeholder="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  name="last_name"
+                  autoComplete="last_name"
                   sx={{ background: "white" }}
                 />
               </Grid>
