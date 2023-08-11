@@ -44,12 +44,13 @@ function TheNav({ showPopover }) {
       label: "Create Playlist",
       classes: navItemClasses,
       icon: <PlusCircleIcon className="h-6 w-6" />,
-      link: "/",
+      link: 'create',
       action: (target) => {
         showPopover(
           "Create a playlist",
           "Log in to create and share playlists.",
-          target
+          target,
+
         );
       },
     },
