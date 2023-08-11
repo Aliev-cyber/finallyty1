@@ -7,15 +7,16 @@ import AuthPage from "../pages/AuthPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
-
 import SearchPage from "../pages/SearchPage";
 import DetailsPage from "../pages/DetailsPage";
 import AddPage from "../pages/AddPage";
+import Profile from "../pages/Profile";
 
 const MainRoutes = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/liked" element={<LikedSongs />} />
         <Route path="/details" element={<DetailsPage />} />
