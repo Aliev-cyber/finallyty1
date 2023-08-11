@@ -33,6 +33,7 @@ function Copyright(props) {
   );
 }
 
+
 const defaultTheme = createTheme();
 
 export default function SignUp() {
