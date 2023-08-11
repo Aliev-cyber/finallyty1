@@ -4,6 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import { Box } from "@mui/material";
 
 const DetailsPage = () => {
   const [likedSongs, setLikedSongs] = useState([
@@ -13,7 +14,6 @@ const DetailsPage = () => {
       title: "All Eyez on Me",
       artist: "2PAC",
       date: "1996",
-      song_time: "4:02",
       duration: "3:30",
       isLiked: false,
       isHovered: false,
@@ -39,20 +39,55 @@ const DetailsPage = () => {
   return (
     <div className="liked-songs-container">
       {likedSongs.map((item, index) => (
-        <header className="app-header">
+        <header key={index} className="app-header">
           <img className="app-logo" src={item.image} alt="Spotify Logo" />
           <h1 className="app-title">{item.title}</h1>
         </header>
       ))}
-      <div className="play-all-icon" onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? (
-          <PauseCircleIcon className="icon-larger" />
-        ) : (
-          <PlayCircleIcon className="icon-larger" />
-        )}
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+        }}
+      >
+        <div className="play-all-icon" onClick={() => setIsPlaying(!isPlaying)}>
+          {isPlaying ? (
+            <PauseCircleIcon className="icon-larger" />
+          ) : (
+            <PlayCircleIcon className="icon-larger" />
+          )}
+        </div>
+        <div
+          style={{
+            color: "white",
+            marginTop: "40px",
+            marginLeft: "15px",
+            fontWeight: "bold",
+            fontSize: "24px",
+          }}
+        >
+          Lyrics
+        </div>
+        {likedSongs.map((item, index) => (
+          <span
+            style={{
+              marginTop: "30px",
+              textAlign: "initial",
+              marginLeft: "15px",
+              color: "white",
+              flexWrap: "wrap",
+              width: "220px",
+              fontSize: "18px",
+            }}
+            key={index}
+          >
+            {item.lyrics}
+          </span>
+        ))}
+      </Box>
 
-      <main className="app-main">
+      {/* <main className="app-main">
         <div className="song-list">
           {likedSongs.map((song, index) => (
             <div
@@ -67,7 +102,7 @@ const DetailsPage = () => {
                 ) : (
                   index + 1
                 )}
-              </div>
+              </div>    
 
               <img
                 className="song-image"
@@ -90,7 +125,7 @@ const DetailsPage = () => {
             </div>
           ))}
         </div>
-      </main>
+      </main> */}
     </div>
   );
 };
