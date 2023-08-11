@@ -3,10 +3,22 @@ import {
   ChevronRightIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
+import React from "react";
 import BaseButton from "../pages/HomePage/components/BaseButton";
 import { useNavigate } from "react-router-dom";
-
+import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+const user = 1;
 function TheHeader() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const navigate = useNavigate();
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
@@ -25,21 +37,58 @@ function TheHeader() {
         </a>
       </div>
       <BaseButton
-          onClick={() => navigate("/add")}
-          classes="text-gray-400 hover:text-white"
-        >
-          Add Your Song
-        </BaseButton>
+        onClick={() => navigate("/add")}
+        classes="text-gray-400 hover:text-white"
+      >
+        Add Your Song
+      </BaseButton>
       <div>
-        <BaseButton
-          onClick={() => navigate("/auth")}
-          classes="text-gray-400 hover:text-white"
-        >
-          Sign up
-        </BaseButton>
-        <BaseButton onClick={() => navigate("/login")} primary>
-          Log in
-        </BaseButton>
+        {!user ? (
+          <div>
+            <BaseButton
+              onClick={() => navigate("/auth")}
+              classes="text-gray-400 hover:text-white"
+            >
+              Sign up
+            </BaseButton>
+            <BaseButton onClick={() => navigate("/login")} primary>
+              Log in
+            </BaseButton>
+          </div>
+        ) : (
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <Avatar
+              onClick={handleMenu}
+              style={{ width: "40px", height: "40px" }}
+            >
+              <AccountCircle />
+            </Avatar>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+          </IconButton>
+        )}
       </div>
     </header>
   );
