@@ -1,15 +1,16 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import useEvent from "./hooks/useEvent";
 import BasePopover from "./components/BasePopover";
 import BaseToast from "./components/BaseToast";
 import TheMain from "./components/TheMain";
 import TheRegistration from "./components/TheRegistration";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 function HomePage() {
   const contentWrapperRef = useRef();
   const toastRef = useRef();
   const popoverRef = useRef();
-
+  const {checkAuth} = useAuthContext()
   let isScrollingEnabled = true;
 
   useEvent("wheel", handleScrolling, true, () => contentWrapperRef.current);
@@ -28,7 +29,9 @@ function HomePage() {
     event.preventDefault();
     event.stopPropagation();
   }
-
+  useEffect(() => {
+    checkAuth()
+  }, [])
   return (
     <>
       <div className="flex grow overflow-auto">
