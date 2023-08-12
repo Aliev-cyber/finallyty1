@@ -1,8 +1,13 @@
 import React from "react";
 import "./style.css";
 import { useTracksContext } from "../../contexts/TracksContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const AddPage = () => {
+  const {user} = useAuthContext()
+  if (!user.is_staff) {
+		return <Navigate to="/" />;
+	}
   const { createTrack } = useTracksContext();
   const genres = ["Pop", "Rock", "Hip Hop", "Electronic", "Jazz", "Classical"];
   function handleSubmit(e) {
