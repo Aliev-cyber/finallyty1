@@ -8,10 +8,10 @@ import BaseButton from "../pages/HomePage/components/BaseButton";
 import { useNavigate } from "react-router-dom";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-const user = 1;
+import { useAuthContext } from "../contexts/AuthContext";
 function TheHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const {user, logout} = useAuthContext()
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -19,6 +19,14 @@ function TheHeader() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = () => {
+    handleClose()
+    logout()
+  }
+  function handleProfile() {
+    console.log(user);
+    navigate("/profile")
+  }
   const navigate = useNavigate();
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
@@ -84,8 +92,8 @@ function TheHeader() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleProfile}>Profile</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </IconButton>
         )}

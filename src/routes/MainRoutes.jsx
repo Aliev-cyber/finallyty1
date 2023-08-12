@@ -11,6 +11,7 @@ import SearchPage from "../pages/SearchPage";
 import DetailsPage from "../pages/DetailsPage";
 import AddPage from "../pages/AddPage";
 import Profile from "../pages/Profile";
+import ActivationPage from "../pages/ActivationPage";
 
 const MainRoutes = () => {
   return (
@@ -27,6 +28,8 @@ const MainRoutes = () => {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/login" element={<LoginPage />} />
+			<Route path="/api/account/activate/" element={<ActivationPage />} />
+
     </Routes>
   );
 };
