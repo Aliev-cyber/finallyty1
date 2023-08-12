@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 import { BASE_URL } from "../utils/consts";
 import $axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +9,28 @@ const authContext = createContext();
 export function useAuthContext() {
   return useContext(authContext);
 }
+const initState = {
+  users: [],
+  oneUser: null,
+  user: null,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "user":
+      return { ...state, user: action.payload };
+    case "users":
+      return { ...state, users: action.payload };
+    case "oneUser":
+      return { ...state, oneUser: action.payload };
+    default:
+      return state;
+  }
+}
 
 const AuthContext = ({ children }) => {
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [state, dispatch] = useReducer(reducer, initState);
 
   async function register(credentials) {
     try {
@@ -39,16 +57,22 @@ const AuthContext = ({ children }) => {
         tokens.access
       );
 
-      setUser(data);
-      console.log(user);
+      dispatch({
+        type: "user",
+        payload: data,
+      });
+      console.log(state.user);
     } catch (e) {
       console.log(e);
     }
   }
 
- async function logout() {
+  async function logout() {
     localStorage.removeItem("tokens");
-    setUser(null);
+    dispatch({
+      type: "user",
+      payload: null,
+    });
   }
 
   async function checkAuth() {
@@ -60,9 +84,15 @@ const AuthContext = ({ children }) => {
           tokens.access
         );
 
-        setUser(data);
+        dispatch({
+          type: "user",
+          payload: data,
+        });
       } else {
-        setUser(null);
+        dispatch({
+          type: "user",
+          payload: null,
+        });
       }
     } catch (e) {
       console.log(e);
@@ -80,14 +110,42 @@ const AuthContext = ({ children }) => {
       console.log(e);
     }
   }
-
+  async function getUsers() {
+    try {
+      const { data } = await $axios.get(`${BASE_URL}/users/`);
+      console.log(data);
+      dispatch({
+        type: "users",
+        payload: data,
+      });
+      console.log(state.users);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function getOneUser(id) {
+    try {
+      const { data } = await $axios.get(`${BASE_URL}/users/${id}`);
+      dispatch({
+        type: "oneUser",
+        payload: data,
+      });
+      console.log(state.oneUser);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   const value = {
-    user,
+    user: state.user,
+    oneUser: state.oneUser,
+    users: state.users,
     register,
     login,
     logout,
     checkAuth,
     activateUser,
+    getUsers,
+    getOneUser,
   };
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };
