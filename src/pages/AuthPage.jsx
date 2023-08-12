@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
 import { useAuthContext } from "../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Link as RouterLink } from 'react-router-dom';
 
 function Copyright(props) {
@@ -37,6 +37,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const { user, register } = useAuthContext();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -70,9 +71,12 @@ export default function SignUp() {
           <Typography
             sx={{
               display: "flex",
+              cursor: "pointer"
             }}
             component="h1"
             variant="h4"
+            onClick={() => navigate("/")}
+            
           >
             <img
               src={spotifyImg}

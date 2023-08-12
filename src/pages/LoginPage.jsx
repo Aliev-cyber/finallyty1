@@ -36,6 +36,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const {user, login} = useAuthContext()
+  const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -60,10 +61,11 @@ export default function SignIn() {
           }}
         >
           <Typography
-            sx={{ display: "flex", gap: "5px" }}
+            sx={{ display: "flex", gap: "5px", cursor:'pointer' }}
             component="h1"
             variant="h4"
             color="white"
+            onClick={() => navigate("/")}
           >
             Sign in{" "}
             <img
