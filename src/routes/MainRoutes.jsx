@@ -22,7 +22,7 @@ const MainRoutes = () => {
           <Route path="/liked" element={<LikedSongs />} />
         </Route>
 
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/search" element={<SearchPage />} />

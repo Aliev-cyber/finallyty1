@@ -25,7 +25,7 @@ function TheHeader() {
   };
   function handleProfile() {
     console.log(user);
-    navigate("/profile");
+    navigate(`/profile/${user.id}`);
   }
 
   const navigate = useNavigate();
@@ -71,9 +71,9 @@ function TheHeader() {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             color="inherit"
+            onClick={handleMenu}
           >
             <Avatar
-              onClick={handleMenu}
               style={{ width: "40px", height: "40px" }}
             >
               <AccountCircle />
