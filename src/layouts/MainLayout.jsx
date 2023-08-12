@@ -4,6 +4,7 @@ import TheSidebar from "../components/TheSidebar";
 import TheSidebarOverlay from "../components/TheSidebarOverlay";
 import useEvent from "../pages/HomePage/hooks/useEvent";
 import TheHeader from "../components/TheHeader";
+import { useTracksContext } from "../contexts/TracksContext";
 
 const MainLayouts = () => {
   const popoverRef = useRef();

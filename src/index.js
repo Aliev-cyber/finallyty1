@@ -3,13 +3,16 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext";
+import TracksContext from "./contexts/TracksContext";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <AuthContext>
-      <App />
+      <TracksContext>
+        <App />
+      </TracksContext>
     </AuthContext>
   </BrowserRouter>
 );

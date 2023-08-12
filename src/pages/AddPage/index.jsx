@@ -1,17 +1,49 @@
 import React from "react";
 import "./style.css";
+import { useTracksContext } from "../../contexts/TracksContext";
 
 const AddPage = () => {
+  const { createTrack } = useTracksContext();
   const genres = ["Pop", "Rock", "Hip Hop", "Electronic", "Jazz", "Classical"];
-
+  function handleSubmit(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const response = {
+      title: data.get("title"),
+      artist: data.get("artist"),
+      album: data.get("album"),
+      genre: data.get("genre"),
+      cover_image: data.get("image"),
+      audio_url: data.get("audio"),
+      release_year: 2000,
+      duration_seconds: 120
+    };
+    createTrack(response)
+    console.log("Successfully added",response);
+  }
   return (
     <div className="add-page">
       <h1>Add Your Song</h1>
-      <form className="add-form">
-        <input className="add-input" type="text" placeholder="Song Title" />
-        <input className="add-input" type="text" placeholder="Artist" />
-        <input className="add-input" type="text" placeholder="Album" />
-        <select className="add-input">
+      <form className="add-form" onSubmit={handleSubmit}>
+        <input
+          className="add-input"
+          type="text"
+          placeholder="Song Title"
+          name="title"
+        />
+        <input
+          className="add-input"
+          type="text"
+          placeholder="Artist"
+          name="artist"
+        />
+        <input
+          className="add-input"
+          type="text"
+          placeholder="Album"
+          name="album"
+        />
+        <select className="add-input" name="genre">
           <option value="" disabled selected>
             Select Genre
           </option>
@@ -21,18 +53,16 @@ const AddPage = () => {
             </option>
           ))}
         </select>
-        <label htmlFor="cover">Select Cover Image</label>
         <input
           className="add-input"
-          type="file"
-          accept="image/*"
-          name="cover"
+          type="text"
+          placeholder="Cover Image URL"
+          name="image"
         />
-        <label htmlFor="audio">Select Audio File</label>
         <input
           className="add-input"
-          type="file"
-          accept="audio/*"
+          type="text"
+          placeholder="YouTube URL of track"
           name="audio"
         />
         <button className="add-input" type="submit">
