@@ -3,7 +3,7 @@ import {
   ChevronRightIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useEffect } from "react";
 import BaseButton from "../pages/HomePage/components/BaseButton";
 import { useNavigate } from "react-router-dom";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
@@ -11,7 +11,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { useAuthContext } from "../contexts/AuthContext";
 function TheHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {user, logout} = useAuthContext()
+  const { user, logout } = useAuthContext();
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,13 +20,14 @@ function TheHeader() {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    handleClose()
-    logout()
-  }
+    handleClose();
+    logout();
+  };
   function handleProfile() {
     console.log(user);
-    navigate("/profile")
+    navigate("/profile");
   }
+
   const navigate = useNavigate();
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
@@ -44,12 +45,12 @@ function TheHeader() {
           <ChevronRightIcon className="h-6 w-6" />
         </a>
       </div>
-      <BaseButton
-        onClick={() => navigate("/add")}
-        classes="text-gray-400 hover:text-white"
-      >
-        Add Your Song
-      </BaseButton>
+        {user && user.is_staff && <BaseButton
+          onClick={() => navigate("/add")}
+          classes="text-gray-400 hover:text-white"
+        >
+          Add Your Song
+        </BaseButton>}
       <div>
         {!user ? (
           <div>

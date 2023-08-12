@@ -12,14 +12,18 @@ import DetailsPage from "../pages/DetailsPage";
 import AddPage from "../pages/AddPage";
 import Profile from "../pages/Profile";
 import ActivationPage from "../pages/ActivationPage";
+import ProtectedRoute from "./ProtectedRoutess";
 
 const MainRoutes = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/liked" element={<LikedSongs />} />
+        </Route>
+
         <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/liked" element={<LikedSongs />} />
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/add" element={<AddPage />} />
@@ -28,8 +32,7 @@ const MainRoutes = () => {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/login" element={<LoginPage />} />
-			<Route path="/api/account/activate/" element={<ActivationPage />} />
-
+      <Route path="/api/account/activate/" element={<ActivationPage />} />
     </Routes>
   );
 };

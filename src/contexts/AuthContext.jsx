@@ -68,7 +68,6 @@ const AuthContext = ({ children }) => {
       console.log(e);
     }
   }
-
   async function activateUser(code) {
     try {
       const res = await $axios.post(`${BASE_URL}/activate/`, {
