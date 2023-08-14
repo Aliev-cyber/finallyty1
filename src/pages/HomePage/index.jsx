@@ -4,6 +4,7 @@ import BasePopover from "./components/BasePopover";
 import BaseToast from "./components/BaseToast";
 import TheMain from "./components/TheMain";
 import TheRegistration from "./components/TheRegistration";
+import ResponsivePlayer from "../Player";
 
 function HomePage() {
   const contentWrapperRef = useRef();
@@ -35,7 +36,8 @@ function HomePage() {
           <TheMain showToast={showToast} toggleScrolling={toggleScrolling} />
         </div>
       </div>
-      <TheRegistration />
+      {/* <TheRegistration /> */}
+      <ResponsivePlayer />
       <BaseToast ref={toastRef} />
       <BasePopover ref={popoverRef} />
     </>
