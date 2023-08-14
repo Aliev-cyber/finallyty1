@@ -66,7 +66,7 @@ class ResponsivePlayer extends Component {
             controls={false}
             onProgress={this.handleProgress}
             onDuration={this.handleDuration}
-            seekTo={
+            seekto={
               this.state.playing ? this.state.played : this.state.randomPosition
             }
           />

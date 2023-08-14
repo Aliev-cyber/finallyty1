@@ -5,11 +5,11 @@ const $axios = axios.create();
 
 $axios.interceptors.request.use(
   async (config) => {
-    const tokens = JSON.parse(localStorage.getItem("tokens"));
-    if (tokens) {
+    const LSData = JSON.parse(localStorage.getItem("LSData"));
+    if (LSData && LSData.tokens) {
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${tokens.access}`,
+        Authorization: `Bearer ${LSData.tokens.access}`,
       };
     }
     return config;
@@ -37,23 +37,27 @@ $axios.interceptors.response.use(
 
 async function refreshAccessToken() {
   try {
-    const tokens = JSON.parse(localStorage.getItem("tokens"));
+    const LSData = JSON.parse(localStorage.getItem("LSData"));
 
-    if (tokens) {
-      const { data } = await axios.post(`${BASE_URL}/account/refresh/`, {
-        refresh: tokens.refresh,
+    if (LSData && LSData.tokens) {
+      const { data } = await axios.post(`${BASE_URL}/refresh/`, {
+        refresh: LSData.tokens.refresh,
       });
       localStorage.setItem(
-        "tokens",
+        "LSData",
         JSON.stringify({
-          access: data.access,
-          refresh: tokens.refresh,
+          tokens: {
+            access: data.access,
+            refresh: LSData.tokens.refresh,
+          },
+          id: LSData.id,
         })
       );
       return data.access;
     }
   } catch (error) {
-    localStorage.removeItem("tokens");
+    localStorage.removeItem("LSData");
+    console.log(error);
   }
 }
 

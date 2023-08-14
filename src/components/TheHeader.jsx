@@ -3,12 +3,23 @@ import {
   ChevronRightIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
-import React, { useEffect } from "react";
+import React from "react";
 import BaseButton from "../pages/HomePage/components/BaseButton";
 import { useNavigate } from "react-router-dom";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useAuthContext } from "../contexts/AuthContext";
+import { styled } from "@mui/system";
+
+const StyledMenu = styled(Menu)(() => ({
+  "& .MuiPaper-root": {
+    backgroundColor: "#121212", 
+    color:'white',
+    minWidth: "200px", 
+    borderRadius: "8px", 
+  },
+}));
+
 function TheHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, logout } = useAuthContext();
@@ -23,12 +34,27 @@ function TheHeader() {
     handleClose();
     logout();
   };
-  function handleProfile() {
-    console.log(user);
-    navigate(`/profile/${user.id}`);
+  async function handleProfile() {
+    handleClose();
+    navigate(`/profile/${user.username}`);
   }
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (anchorEl && !anchorEl.contains(event.target)) {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [anchorEl]);
+
   return (
     <header className="bg-[#070707] flex-1 flex justify-between items-center py-[10px] px-[13px] sm:px-[32px] sticky top-0 z-10">
       <div className="flex">
@@ -45,12 +71,14 @@ function TheHeader() {
           <ChevronRightIcon className="h-6 w-6" />
         </a>
       </div>
-        {user && user.is_staff && <BaseButton
+      {user && user.is_staff && (
+        <BaseButton
           onClick={() => navigate("/add")}
           classes="text-gray-400 hover:text-white"
         >
           Add Your Song
-        </BaseButton>}
+        </BaseButton>
+      )}
       <div>
         {!user ? (
           <div>
@@ -73,12 +101,10 @@ function TheHeader() {
             color="inherit"
             onClick={handleMenu}
           >
-            <Avatar
-              style={{ width: "40px", height: "40px" }}
-            >
+            <Avatar style={{ width: "40px", height: "40px" }}>
               <AccountCircle />
             </Avatar>
-            <Menu
+            <StyledMenu
               id="menu-appbar"
               anchorEl={anchorEl}
               anchorOrigin={{
@@ -95,7 +121,7 @@ function TheHeader() {
             >
               <MenuItem onClick={handleProfile}>Profile</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
+            </StyledMenu>
           </IconButton>
         )}
       </div>

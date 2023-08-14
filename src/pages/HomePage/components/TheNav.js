@@ -31,7 +31,7 @@ function TheNav({ showPopover }) {
       label: "Your Library",
       classes: `${navItemClasses} mb-6`,
       icon: <ViewColumnsIcon className="h-6 w-6" />,
-      link: "/library",
+      link: "library",
       action: (target) => {
         showPopover(
           "Enjoy Your Library",

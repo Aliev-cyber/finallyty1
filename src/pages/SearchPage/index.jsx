@@ -10,7 +10,7 @@ const SearchPage = () => {
         <input
           className="search-input"
           placeholder="What do you want to listen to?"
-          inputProps={{ "aria-label": "search", style: { color: "white" } }}
+          inputprops={{ "aria-label": "search", style: { color: "white" } }}
         />
       </div>
     </header>

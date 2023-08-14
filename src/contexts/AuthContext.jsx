@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useReducer, useState } from "react";
 import { BASE_URL } from "../utils/consts";
 import $axios from "../utils/axios";
-import { useNavigate } from "react-router-dom";
+import { Await, useNavigate } from "react-router-dom";
 
 const authContext = createContext();
 
@@ -34,8 +34,7 @@ const AuthContext = ({ children }) => {
 
   async function register(credentials) {
     try {
-      await axios.post(`${BASE_URL}/register/`, credentials);
-      login({ username: credentials.username, password: credentials.password });
+      await $axios.post(`${BASE_URL}/register/`, credentials);
     } catch (e) {
       console.log(e);
     }
@@ -47,28 +46,34 @@ const AuthContext = ({ children }) => {
         `${BASE_URL}/login/`,
         credentials
       );
+      console.log("what we send to back in body for login: ",credentials);
+      console.log("tokens we got: ",tokens);
 
-      console.log(tokens);
-
-      localStorage.setItem("tokens", JSON.stringify(tokens));
-
-      const { data } = await $axios.get(
-        `${BASE_URL}/api/api/user`,
-        tokens.access
+      console.log({
+        username: credentials.username
+      });
+      const { data } = await axios.post(
+        `${BASE_URL}/api/api/user/`,
+        {
+          username : credentials.username
+        }
       );
-
+        console.log("what api api user returns: ",data);
       dispatch({
         type: "user",
         payload: data,
       });
-      console.log(state.user);
+      const LSData = {
+        tokens: tokens,
+        id: data.id,
+      }
+      localStorage.setItem("LSData", JSON.stringify(LSData));
     } catch (e) {
       console.log(e);
     }
   }
-
-  async function logout() {
-    localStorage.removeItem("tokens");
+  function logout() {
+    localStorage.removeItem("LSData");
     dispatch({
       type: "user",
       payload: null,
@@ -77,13 +82,9 @@ const AuthContext = ({ children }) => {
 
   async function checkAuth() {
     try {
-      const tokens = JSON.parse(localStorage.getItem("tokens"));
-      if (tokens) {
-        const { data } = await $axios.get(
-          `${BASE_URL}/api/api/user`,
-          tokens.access
-        );
-
+      const LSData = JSON.parse(localStorage.getItem("LSData"));
+      if (LSData) {
+        const { data } = await axios.get(`${BASE_URL}/users/${LSData.id}`);
         dispatch({
           type: "user",
           payload: data,
@@ -123,9 +124,9 @@ const AuthContext = ({ children }) => {
       console.log(e);
     }
   }
-  async function getOneUser(id) {
+  async function getOneUser(username) {
     try {
-      const { data } = await $axios.get(`${BASE_URL}/users/${id}`);
+      const { data } = await axios.post(`${BASE_URL}/api/api/user/`, {username : username});
       dispatch({
         type: "oneUser",
         payload: data,
