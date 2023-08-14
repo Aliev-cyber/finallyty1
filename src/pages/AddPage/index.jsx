@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 const AddPage = () => {
   const {user} = useAuthContext()
   const { createTrack } = useTracksContext();
-  if (!user.is_staff) {
+  if (!user ||!user.is_staff) {
 		return <Navigate to="/" />;
 	}
   const genres = ["Pop", "Rock", "Hip Hop", "Electronic", "Jazz", "Classical"];
@@ -20,12 +20,11 @@ const AddPage = () => {
       album: data.get("album"),
       genre: data.get("genre"),
       cover_image: data.get("image"),
-      audio_url: data.get("audio"),
+      audio_file: data.get("audio"),
       release_year: 2000,
       duration_seconds: 120
     };
     createTrack(response)
-    console.log("Successfully added",response);
   }
   return (
     <div className="add-page">
@@ -50,7 +49,7 @@ const AddPage = () => {
           name="album"
         />
         <select className="add-input" name="genre">
-          <option value="" disabled selected>
+          <option value={null} disabled selected>
             Select Genre
           </option>
           {genres.map((genre, index) => (

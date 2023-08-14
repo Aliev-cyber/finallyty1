@@ -14,8 +14,6 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
       return
     }
     navigate(link);
-    onClick(labelRef.current);
-
   }
   return (
     <div>
