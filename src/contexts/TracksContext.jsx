@@ -59,6 +59,7 @@ const TracksContext = ({ children }) => {
   async function createTrack(track) {
     try {
       await $axios.post(`${BASE_URL}/music-tracks/`, track);
+      getTracks()
     } catch (e) {
       console.log(e);
     }
@@ -66,7 +67,7 @@ const TracksContext = ({ children }) => {
 
   async function deleteTrack(id) {
     try {
-      await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
+      await $axios.delete(`${BASE_URL}/tracks/${id}/`);
       getTracks();
     } catch (e) {
       console.log(e);
@@ -76,6 +77,7 @@ const TracksContext = ({ children }) => {
   async function editTrack(id, newData) {
     try {
       await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
+      getTracks()
     } catch (e) {
       console.log(e);
     }
@@ -95,6 +97,12 @@ const TracksContext = ({ children }) => {
 		  });
     }
   }
+  function clearURL() {
+    dispatch({
+      type: "url",
+      payload: null,
+    })
+  }
   const value = {
     tracks: state.tracks,
     oneTrack: state.oneTrack,
@@ -105,6 +113,7 @@ const TracksContext = ({ children }) => {
     editTrack,
     getOneTrack,
     playTrack,
+    clearURL
   };
   return (
     <tracksContext.Provider value={value}>{children}</tracksContext.Provider>
