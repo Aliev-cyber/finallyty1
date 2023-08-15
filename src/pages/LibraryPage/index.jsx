@@ -6,7 +6,7 @@ import Pagination from "../../components/Pagination";
 import { useSearchParams } from "react-router-dom";
 
 const LibraryPage = () => {
-  const { tracks, getTracks } = useTracksContext();
+  const { tracks, getTracks} = useTracksContext();
 	const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const LibraryPage = () => {
       </h1>
       <Grid container spacing={2}>
         {tracks && tracks.map((track) => {
-          return <TrackCard track={track} key={track.id}/>
+            return <TrackCard track={track} key={track.id}/>
       })}
       </Grid>
       <Pagination/>

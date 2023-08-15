@@ -35,14 +35,13 @@ const TracksContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [page, setPage] = useState(+searchParams.get("page") || 1);
-
+  
 	async function getTracks() {
 		try {
 			const { data } = await $axios.get(
 				`${BASE_URL}/tracks/${window.location.search}`
 			);
 			console.log(data);
-
 			const totalCount = Math.ceil(data.count / 5);
 
 			dispatch({
@@ -82,7 +81,9 @@ const TracksContext = ({ children }) => {
   async function deleteTrack(id) {
     try {
       await $axios.delete(`${BASE_URL}/tracks/${id}/`);
+      await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
       console.log("succesfully deleted");
+      setPage(1)
       getTracks();
       console.log("succesfully got tracks");
     } catch (e) {
@@ -92,7 +93,8 @@ const TracksContext = ({ children }) => {
 
   async function editTrack(id, newData) {
     try {
-      await $axios.patch(`${BASE_URL}/tracks/${id}/`, newData);
+      await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
+      console.log("succesfully edited");
       getTracks();
     } catch (e) {
       console.log(e);
@@ -100,7 +102,7 @@ const TracksContext = ({ children }) => {
   }
   async function playTrack(id) {
     try {
-      const { data } = await $axios.get(`${BASE_URL}/tracks/${id}`);
+      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}`);
       dispatch({
         type: "url",
         payload: data.audio_file,
