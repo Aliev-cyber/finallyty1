@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
-import { useAuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useTracksContext } from "../../contexts/TracksContext";
 
-const DeleteModal = ({ open, setOpen }) => {
+const DeleteModal = ({ open, setOpen, track }) => {
   const navigate = useNavigate();
-  const { deleteAcc } = useAuthContext();
+  const { deleteTrack } = useTracksContext();
   function handleDeleteUser() {
-    deleteAcc();
-    navigate("/products");
+    deleteTrack(track.id);
+    navigate("/library");
     handleClose();
   }
   const handleClose = () => {
@@ -30,10 +30,10 @@ const DeleteModal = ({ open, setOpen }) => {
         }}
       >
         <Typography variant="h6" gutterBottom>
-          Confirm User Deletion
+          Confirm Track Deletion
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: "2rem" }}>
-          Are you sure you want to delete your account?
+          Are you sure you want to delete track {track.title} by {track.artist}?
         </Typography>
         <Button
           variant="contained"
@@ -44,7 +44,7 @@ const DeleteModal = ({ open, setOpen }) => {
           No, sorry
         </Button>
         <Button variant="contained" color="error" onClick={handleDeleteUser}>
-          Delete Account
+          Delete Track
         </Button>
       </Box>
     </Modal>
