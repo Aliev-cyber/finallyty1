@@ -105,27 +105,6 @@ function TheMain({ showToast, toggleScrolling }) {
           </div>
         </div>
       </div>
-      <div className="relative pt-[24px] pb-[48px] px-[32px] space-y-9 max-w-screen-5xl">
-        <div>
-          <div className="flex flex-wrap justify-between items-end gap-x-6 mb-[18px]">
-            <div>
-              <h2 className="text-2xl font-semibold hover:underline capitalize">
-                <a href="/">Lorem ipsum dolor sit</a>
-              </h2>
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
-            {playlists.map((playlist) => (
-              <Playlist
-                key={playlist.title}
-                showToast={showToast}
-                toggleScrolling={toggleScrolling}
-                {...playlist}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
     </main>
   );
 }
