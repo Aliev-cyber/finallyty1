@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import spotifyImg from "../Photos/spotify-icon.svg";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -33,11 +33,10 @@ function Copyright(props) {
   );
 }
 
-
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user, register } = useAuthContext();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,16 +44,14 @@ export default function SignUp() {
     console.log(data);
     register({
       username: data.get("user_name"),
-      first_name: data.get("first_name"),
-      last_name: data.get("last_name"),
       email: data.get("email"),
       password: data.get("password"),
-      password_confirmation: data.get("password_confirm")
+      password_confirmation: data.get("password_confirm"),
     });
   };
-	if (user) {
-		return <Navigate to="/" />;
-	}
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -71,12 +68,11 @@ export default function SignUp() {
           <Typography
             sx={{
               display: "flex",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
             component="h1"
             variant="h4"
             onClick={() => navigate("/")}
-            
           >
             <img
               src={spotifyImg}
@@ -92,29 +88,7 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="first_name"
-                  name="first_name"
-                  required
-                  fullWidth
-                  id="first_name"
-                  placeholder="FirstName"
-                  autoFocus
-                  sx={{ background: "white" }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="last_name"
-                  placeholder="Last Name"
-                  name="last_name"
-                  autoComplete="last_name"
-                  sx={{ background: "white" }}
-                />
-              </Grid>
+              <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -184,7 +158,12 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link sx={{ color: "white" }} component={RouterLink} to="/login"  variant="body2">
+                <Link
+                  sx={{ color: "white" }}
+                  component={RouterLink}
+                  to="/login"
+                  variant="body2"
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>
