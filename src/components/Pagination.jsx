@@ -12,7 +12,8 @@ const Pagination = () => {
 
     setSearchParams({
       ...currentParams,
-      page,
+      _page: page,
+      _limit: 12
     });
   }, [page]);
 

@@ -29,7 +29,7 @@ const DetailsPage = () => {
       <header className="app-header">
         <img
           className="app-logo"
-          src={track.cover_image_url}
+          src={track.cover_image}
           alt="Spotify Logo"
         />
         <h1 className="app-title">{track.title}</h1>

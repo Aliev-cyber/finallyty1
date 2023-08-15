@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
-import { BASE_URL, LIMIT } from "../utils/consts";
-import $axios from "../utils/axios";
+import { BASE_URL } from "../utils/consts";
+import axios from "axios";
+import $axios from "../utils/axios"
 import { useSearchParams } from "react-router-dom";
 
 const tracksContext = createContext();
@@ -34,16 +35,24 @@ function reducer(state, action) {
 const TracksContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [page, setPage] = useState(+searchParams.get("page") || 1);
-  
+	const [page, setPage] = useState(+searchParams.get("_page") || 1);
+  const API = "http://localhost:8000/tracks"
 	async function getTracks() {
 		try {
-			const { data } = await $axios.get(
-				`${BASE_URL}/tracks/${window.location.search}`
+			const { data, headers } = await axios.get(
+				`${API}${window.location.search}`,
+        {
+          params: {
+            title_like: state.search,
+            genre_like: state.search,
+            artist_like: state.search,
+            _page: page,
+            _limit: 12,
+          },
+        }
 			);
-			console.log(data);
-			const totalCount = Math.ceil(data.count / 5);
-
+			console.log("getTracks data:",data);
+      const totalCount = Math.ceil(headers["x-total-count"] / 12);
 			dispatch({
 				type: "totalPages",
 				payload: totalCount,
@@ -51,7 +60,7 @@ const TracksContext = ({ children }) => {
 
 			dispatch({
 				type: "tracks",
-				payload: data.results,
+				payload: data,
 			});
 		} catch (e) {
 			console.log(e);
@@ -59,7 +68,7 @@ const TracksContext = ({ children }) => {
 	}
   async function getOneTrack(id) {
     try {
-      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
+      const { data } = await axios.get(`${API}/${id}`);
       dispatch({
         type: "oneTrack",
         payload: data,
@@ -71,7 +80,8 @@ const TracksContext = ({ children }) => {
 
   async function createTrack(track) {
     try {
-      await $axios.post(`${BASE_URL}/tracks/`, track);
+      await axios.post(API, track);
+      setPage(1)
       getTracks();
     } catch (e) {
       console.log(e);
@@ -80,21 +90,20 @@ const TracksContext = ({ children }) => {
 
   async function deleteTrack(id) {
     try {
-      await $axios.delete(`${BASE_URL}/tracks/${id}/`);
-      await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
-      console.log("succesfully deleted");
+      await axios.delete(`${API}/${id}`);
       setPage(1)
       getTracks();
-      console.log("succesfully got tracks");
     } catch (e) {
+      if (e.response.status === 500) {
+        getTracks();
+      }
       console.log(e);
     }
   }
 
   async function editTrack(id, newData) {
     try {
-      await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
-      console.log("succesfully edited");
+      await axios.patch(`${API}/${id}`, newData);
       getTracks();
     } catch (e) {
       console.log(e);
@@ -102,7 +111,7 @@ const TracksContext = ({ children }) => {
   }
   async function playTrack(id) {
     try {
-      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}`);
+      const { data } = await axios.get(`${API}/${id}`);
       dispatch({
         type: "url",
         payload: data.audio_file,
