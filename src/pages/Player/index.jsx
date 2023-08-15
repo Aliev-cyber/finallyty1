@@ -59,14 +59,14 @@ class ResponsivePlayer extends Component {
           <ReactPlayer
             ref={(player) => (this.player = player)}
             className={`react-player ${this.state.playing ? "" : "hidden"}`}
-            url="https://www.youtube.com/watch?v=RyIGQZMm_0k"
+            url="https://www.youtube.com/watch?v=jfKfPfyJRdk"
             width="100%"
             height="100%"
             playing={this.state.playing}
             controls={false}
             onProgress={this.handleProgress}
             onDuration={this.handleDuration}
-            seekto={
+            seekTo={
               this.state.playing ? this.state.played : this.state.randomPosition
             }
           />
