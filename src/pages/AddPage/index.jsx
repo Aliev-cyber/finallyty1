@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { useTracksContext } from "../../contexts/TracksContext";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AddPage = () => {
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
   const { createTrack } = useTracksContext();
-  if (!user ||!user.is_staff) {
-		return <Navigate to="/" />;
-	}
+  const [image, setImage] = useState()
+  const navigate = useNavigate()
+  if (!user || !user.is_staff) {
+    return <Navigate to="/" />;
+  }
   const genres = [
     "Charts",
     "Events",
@@ -22,23 +24,48 @@ const AddPage = () => {
     "Focus",
     "Sleep",
     "Dance",
-    "Jazz"
+    "Jazz",
   ];
-  
+  function isValidYouTubeUrl(url) {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+(&\S*)?$/;
+    return youtubeRegex.test(url);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+
+    const testImage = new Image();
+    testImage.src = data.get("image");
+    setImage(testImage.src)
+    testImage.onerror = () => {
+      setImage("https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif")
+    };
+
     const response = {
       title: data.get("title"),
       artist: data.get("artist"),
-      album: data.get("album"),
+      lyrics: data.get("lyrics"),
       genre: data.get("genre"),
-      cover_image: data.get("image"),
-      audio_file: data.get("audio"),
-      release_year: 2000,
-      duration_seconds: 120
+      cover_image: image,
+      audio_file: isValidYouTubeUrl(data.get("audio"))? data.get("audio"):"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
+      release_year: +data.get("release"),
+      duration_seconds: +data.get("duration"),
     };
-    createTrack(response)
+    let isValid = true;
+    for (let key in response) {
+      console.log(response[key]);
+      if (!response[key]) {
+        isValid = false;
+        break;
+      }
+    }
+    if (!isValid) {
+      alert("fill in the blanks");
+      return;
+    }
+    createTrack(response);
+    navigate('/library')
   }
   return (
     <div className="add-page">
@@ -59,8 +86,8 @@ const AddPage = () => {
         <input
           className="add-input"
           type="text"
-          placeholder="Album"
-          name="album"
+          placeholder="Lyrics"
+          name="lyrics"
         />
         <select className="add-input" name="genre">
           <option value={null} disabled selected>
@@ -83,6 +110,18 @@ const AddPage = () => {
           type="text"
           placeholder="YouTube URL of track"
           name="audio"
+        />
+        <input
+          className="add-input"
+          type="number"
+          placeholder="Release year"
+          name="release"
+        />
+        <input
+          className="add-input"
+          type="number"
+          placeholder="Duration in seconds"
+          name="duration"
         />
         <button className="add-input" type="submit">
           Add Song

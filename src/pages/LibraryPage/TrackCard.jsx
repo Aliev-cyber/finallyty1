@@ -35,7 +35,7 @@ const TrackCard = ({ track }) => {
         <CardMedia
           component="img"
           sx={{ height: "14rem", objectFit: "cover" }}
-          image={track.cover_image_url}
+          image={track.cover_image}
           alt={track.title}
           onClick={handleClick}
         />
