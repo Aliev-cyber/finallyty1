@@ -36,8 +36,13 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+
   const navigate = useNavigate();
   const { user, register } = useAuthContext();
+
+  const navigate = useNavigate()
+  const { register } = useAuthContext();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -52,6 +57,9 @@ export default function SignUp() {
   if (user) {
     return <Navigate to="/" />;
   }
+
+// fix navigation here after activate page
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -88,7 +96,10 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
+
               <Grid item xs={12} sm={6}></Grid>
+
+
               <Grid item xs={12}>
                 <TextField
                   required

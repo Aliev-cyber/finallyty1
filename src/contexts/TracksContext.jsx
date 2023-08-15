@@ -27,12 +27,11 @@ function reducer(state, action) {
 
 const TracksContext = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initState);
-	const [searchParams, setSearchParams] = useSearchParams();
 
 	async function getTracks() {
 		try {
 			const { data } = await $axios.get(
-				`${BASE_URL}/tracks/`
+				`${BASE_URL}/music-tracks/`
 			);
 			console.log(data);
 			dispatch({
@@ -46,8 +45,7 @@ const TracksContext = ({ children }) => {
 
 	async function getOneTrack(id) {
 		try {
-			const { data } = await $axios.get(`${BASE_URL}/tracks/${id}/`);
-
+			const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
 			dispatch({
 				type: "oneTrack",
 				payload: data,
@@ -59,7 +57,7 @@ const TracksContext = ({ children }) => {
 
 	async function createTrack(track) {
 		try {
-			await $axios.post(`${BASE_URL}/tracks/`, track);
+			await $axios.post(`${BASE_URL}/music-tracks/`, track);
 		} catch (e) {
 			console.log(e);
 		}
@@ -67,7 +65,7 @@ const TracksContext = ({ children }) => {
 
 	async function deleteTrack(id) {
 		try {
-			await $axios.delete(`${BASE_URL}/tracks/${id}/`);
+			await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
 			getTracks();
 		} catch (e) {
 			console.log(e);
@@ -76,7 +74,7 @@ const TracksContext = ({ children }) => {
 
 	async function editTrack(id, newData) {
 		try {
-			await $axios.patch(`${BASE_URL}/tracks/${id}/`, newData);
+			await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
 		} catch (e) {
 			console.log(e);
 		}

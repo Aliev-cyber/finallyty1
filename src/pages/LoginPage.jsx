@@ -89,7 +89,7 @@ export default function SignIn() {
               name="username"
               autoComplete="username"
               autoFocus
-              placeholder="User Name"
+              placeholder="Username"
               style={{
                 background: "white",
                 borderRadius: "4px",

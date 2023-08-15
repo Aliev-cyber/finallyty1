@@ -13,6 +13,7 @@ import AddPage from "../pages/AddPage";
 import Profile from "../pages/Profile";
 import ActivationPage from "../pages/ActivationPage";
 import ProtectedRoute from "./ProtectedRoutess";
+import LibraryPage from "../pages/LibraryPage";
 
 const MainRoutes = () => {
   return (
@@ -20,13 +21,14 @@ const MainRoutes = () => {
       <Route element={<MainLayout />}>
         <Route element={<ProtectedRoute />}>
           <Route path="/liked" element={<LikedSongs />} />
+          <Route path="/add" element={<AddPage />} />
+          <Route path="/library" element={<LibraryPage />} />
         </Route>
 
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/add" element={<AddPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

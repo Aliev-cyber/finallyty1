@@ -5,12 +5,12 @@ import { useParams } from "react-router-dom";
 
 
 const Profile = () => {
-	const { id } = useParams();
+	const { username } = useParams();
   const { getOneUser, oneUser } = useAuthContext()
   const [user, setUser] = useState('null')
   useEffect(() => {
-    getOneUser(id)
-  }, [id])
+    getOneUser(username)
+  }, [username])
   useEffect(() => {
 		if (oneUser) {
 			setUser({...oneUser});
