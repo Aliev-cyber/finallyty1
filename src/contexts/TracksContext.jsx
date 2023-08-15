@@ -13,6 +13,7 @@ const initState = {
   tracks: [],
   oneTrack: null,
   url: "",
+  totalPages: 1,
 };
 
 function reducer(state, action) {
@@ -23,6 +24,8 @@ function reducer(state, action) {
       return { ...state, oneTrack: action.payload };
     case "url":
       return { ...state, url: action.payload };
+    case "totalPages":
+      return { ...state, totalPages: action.payload };
     default:
       return state;
   }
@@ -30,20 +33,30 @@ function reducer(state, action) {
 
 const TracksContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [page, setPage] = useState(+searchParams.get("page") || 1);
+  
+	async function getTracks() {
+		try {
+			const { data } = await $axios.get(
+				`${BASE_URL}/tracks/${window.location.search}`
+			);
+			console.log(data);
+			const totalCount = Math.ceil(data.count / 5);
 
-  async function getTracks() {
-    try {
-      const { data } = await $axios.get(`${BASE_URL}/music-tracks/`);
-      console.log(data);
-      dispatch({
-        type: "tracks",
-        payload: data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+			dispatch({
+				type: "totalPages",
+				payload: totalCount,
+			});
 
+			dispatch({
+				type: "tracks",
+				payload: data.results,
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
   async function getOneTrack(id) {
     try {
       const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
@@ -58,8 +71,8 @@ const TracksContext = ({ children }) => {
 
   async function createTrack(track) {
     try {
-      await $axios.post(`${BASE_URL}/music-tracks/`, track);
-      getTracks()
+      await $axios.post(`${BASE_URL}/tracks/`, track);
+      getTracks();
     } catch (e) {
       console.log(e);
     }
@@ -68,7 +81,11 @@ const TracksContext = ({ children }) => {
   async function deleteTrack(id) {
     try {
       await $axios.delete(`${BASE_URL}/tracks/${id}/`);
+      await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
+      console.log("succesfully deleted");
+      setPage(1)
       getTracks();
+      console.log("succesfully got tracks");
     } catch (e) {
       console.log(e);
     }
@@ -77,7 +94,8 @@ const TracksContext = ({ children }) => {
   async function editTrack(id, newData) {
     try {
       await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
-      getTracks()
+      console.log("succesfully edited");
+      getTracks();
     } catch (e) {
       console.log(e);
     }
@@ -91,29 +109,32 @@ const TracksContext = ({ children }) => {
       });
       console.log(state.url);
     } catch (error) {
-		dispatch({
-			type: "url",
-			payload: "",
-		  });
+      dispatch({
+        type: "url",
+        payload: "",
+      });
     }
   }
   function clearURL() {
     dispatch({
       type: "url",
       payload: null,
-    })
+    });
   }
   const value = {
     tracks: state.tracks,
     oneTrack: state.oneTrack,
     playerURL: state.url,
+    totalPages: state.totalPages,
+		page,
+		setPage,
     getTracks,
     createTrack,
     deleteTrack,
     editTrack,
     getOneTrack,
     playTrack,
-    clearURL
+    clearURL,
   };
   return (
     <tracksContext.Provider value={value}>{children}</tracksContext.Provider>
