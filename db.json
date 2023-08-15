@@ -1,42 +1,6 @@
 {
   "tracks": [
     {
-      "id": 1,
-      "title": "json-server",
-      "genre": "Pop",
-      "cover_image_url": null,
-      "audio_file": null,
-      "lyrics": "adsasdads",
-      "duration_seconds": 123,
-      "release_year": 2000,
-      "rating": [],
-      "is_premium": false
-    },
-    {
-      "id": 2,
-      "title": "json-server2",
-      "genre": "Pop",
-      "cover_image_url": null,
-      "audio_file": null,
-      "lyrics": "adsasdads",
-      "duration_seconds": 123,
-      "release_year": 2000,
-      "rating": [],
-      "is_premium": false
-    },
-    {
-      "id": 3,
-      "title": "json-server3",
-      "genre": "Pop",
-      "cover_image_url": null,
-      "audio_file": null,
-      "lyrics": "adsasdads",
-      "duration_seconds": 123,
-      "release_year": 2000,
-      "rating": [],
-      "is_premium": false
-    },
-    {
       "title": "asdasd",
       "artist": "sdads",
       "lyrics": "aasda",
@@ -44,51 +8,7 @@
       "cover_image": "sdasda",
       "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       "release_year": 2131,
-      "duration_seconds": 121,
-      "id": 4
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
-      "id": 5
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
-      "id": 6
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
-      "id": 7
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
+      "duration_seconds": "1212",
       "id": 8
     },
     {
@@ -111,17 +31,6 @@
       "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       "release_year": 2131,
       "duration_seconds": 121,
-      "id": 10
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
       "id": 11
     },
     {
@@ -129,7 +38,7 @@
       "artist": "sdads",
       "lyrics": "aasda",
       "genre": "At Home",
-      "cover_image": "sdasda",
+      "cover_image": "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif",
       "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       "release_year": 2131,
       "duration_seconds": 121,
@@ -167,17 +76,6 @@
       "release_year": 2131,
       "duration_seconds": 121,
       "id": 15
-    },
-    {
-      "title": "asdasd",
-      "artist": "sdads",
-      "lyrics": "aasda",
-      "genre": "At Home",
-      "cover_image": "sdasda",
-      "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
-      "release_year": 2131,
-      "duration_seconds": 121,
-      "id": 16
     },
     {
       "title": "asdasd",
@@ -261,7 +159,7 @@
       "artist": "sdads",
       "lyrics": "aasda",
       "genre": "At Home",
-      "cover_image": "sdasda",
+      "cover_image": "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif",
       "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       "release_year": 2131,
       "duration_seconds": 121,
@@ -272,7 +170,7 @@
       "artist": "sdads",
       "lyrics": "aasda",
       "genre": "At Home",
-      "cover_image": "sdasda",
+      "cover_image": "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif",
       "audio_file": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       "release_year": 2131,
       "duration_seconds": 121,
@@ -284,18 +182,11 @@
       "lyrics": "asd",
       "genre": "Sleep",
       "cover_image": "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif",
-      "audio_file": "https://www.youtube.com/watch?v=S-ztoGpA7a4",
+      "audio_file": "https://www.youtube.com/watch?v=tBcPji_jRDc",
       "release_year": 123,
       "duration_seconds": 123,
       "id": 26
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "trackId": 1,
-      "userId": 1
-    }
-  ]
+  "comments": []
 }

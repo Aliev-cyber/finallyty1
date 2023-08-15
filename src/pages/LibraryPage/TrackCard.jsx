@@ -1,19 +1,11 @@
 import React from "react";
 import { Grid, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useTracksContext } from "../../contexts/TracksContext";
 
 const TrackCard = ({ track }) => {
   const navigate = useNavigate("");
-  const { deleteTrack } = useTracksContext();
   function handleClick() {
     navigate(`/details/${track.id}`);
-  }
-  function handleDelete(e) {
-    e.preventDefault();
-    deleteTrack(track.id);
   }
   function formatDuration(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -66,14 +58,6 @@ const TrackCard = ({ track }) => {
           >
             {formatDuration(track.duration_seconds)}
           </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="delete"
-            sx={{ alignSelf: "flex-end" }}
-            onClick={handleDelete}
-          >
-            <DeleteIcon />
-          </IconButton>
         </CardContent>
       </Card>
     </Grid>
