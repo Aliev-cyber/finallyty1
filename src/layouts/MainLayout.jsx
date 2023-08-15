@@ -5,6 +5,7 @@ import TheSidebarOverlay from "../components/TheSidebarOverlay";
 import useEvent from "../pages/HomePage/hooks/useEvent";
 import TheHeader from "../components/TheHeader";
 import { useTracksContext } from "../contexts/TracksContext";
+import ResponsivePlayer from "../pages/Player";
 
 const MainLayouts = () => {
   const popoverRef = useRef();
@@ -28,7 +29,7 @@ const MainLayouts = () => {
   function toggleScrolling(isEnabled) {
     isScrollingEnabled = isEnabled;
   }
-
+  const {playerURL} = useTracksContext('')
   return (
     <div className="flex grow overflow-auto">
       <TheSidebar showPopover={showPopover} />
@@ -36,6 +37,7 @@ const MainLayouts = () => {
       <div className="flex-1 overflow-auto" ref={contentWrapperRef}>
         <TheHeader />
         <Outlet showToast={showToast} toggleScrolling={toggleScrolling} />
+        <ResponsivePlayer url = {playerURL}/>
       </div>
     </div>
   );

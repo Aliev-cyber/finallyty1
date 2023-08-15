@@ -1,9 +1,19 @@
 import React from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { useTracksContext } from '../../contexts/TracksContext';
 
 const TrackCard = ({ track }) => {
+  const {playTrack} = useTracksContext()
+  function handleClick() {
+    playTrack(track.id)
+  }
+  function formatDuration(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={6} md={4} lg={3} onClick={handleClick}>
       <Card
         sx={{
           backgroundColor: "#222222",
@@ -28,7 +38,7 @@ const TrackCard = ({ track }) => {
             {track.artist} - {track.album}
           </Typography>
           <Typography variant="subtitle2" sx={{ fontSize: '1rem' }}>
-            {track.duration_seconds}
+            {formatDuration(track.duration_seconds)}
           </Typography>
         </CardContent>
       </Card>

@@ -6,92 +6,106 @@ import { useSearchParams } from "react-router-dom";
 const tracksContext = createContext();
 
 export function useTracksContext() {
-	return useContext(tracksContext);
+  return useContext(tracksContext);
 }
 
 const initState = {
-	tracks: [],
-	oneTrack: null,
+  tracks: [],
+  oneTrack: null,
+  url: "",
 };
 
 function reducer(state, action) {
-	switch (action.type) {
-		case "tracks":
-			return { ...state, tracks: action.payload };
-		case "oneTrack":
-			return { ...state, oneTrack: action.payload };
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case "tracks":
+      return { ...state, tracks: action.payload };
+    case "oneTrack":
+      return { ...state, oneTrack: action.payload };
+    case "url":
+      return { ...state, url: action.payload };
+    default:
+      return state;
+  }
 }
 
 const TracksContext = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer, initState);
+  const [state, dispatch] = useReducer(reducer, initState);
 
-	async function getTracks() {
-		try {
-			const { data } = await $axios.get(
-				`${BASE_URL}/music-tracks/`
-			);
-			console.log(data);
-			dispatch({
-				type: "tracks",
-				payload: data.results,
-			});
-		} catch (e) {
-			console.log(e);
-		}
-	}
+  async function getTracks() {
+    try {
+      const { data } = await $axios.get(`${BASE_URL}/music-tracks/`);
+      console.log(data);
+      dispatch({
+        type: "tracks",
+        payload: data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-	async function getOneTrack(id) {
-		try {
-			const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
-			dispatch({
-				type: "oneTrack",
-				payload: data,
-			});
-		} catch (e) {
-			console.log(e);
-		}
-	}
+  async function getOneTrack(id) {
+    try {
+      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
+      dispatch({
+        type: "oneTrack",
+        payload: data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-	async function createTrack(track) {
-		try {
-			await $axios.post(`${BASE_URL}/music-tracks/`, track);
-		} catch (e) {
-			console.log(e);
-		}
-	}
+  async function createTrack(track) {
+    try {
+      await $axios.post(`${BASE_URL}/music-tracks/`, track);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-	async function deleteTrack(id) {
-		try {
-			await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
-			getTracks();
-		} catch (e) {
-			console.log(e);
-		}
-	}
+  async function deleteTrack(id) {
+    try {
+      await $axios.delete(`${BASE_URL}/music-tracks/${id}/`);
+      getTracks();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-	async function editTrack(id, newData) {
-		try {
-			await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
-	const value = {
-		tracks: state.tracks,
-		oneTrack: state.oneTrack,
-		getTracks,
-		createTrack,
-		deleteTrack,
-		editTrack,
-		getOneTrack,
-	};
-	return (
-		<tracksContext.Provider value={value}>{children}</tracksContext.Provider>
-	);
+  async function editTrack(id, newData) {
+    try {
+      await $axios.patch(`${BASE_URL}/music-tracks/${id}/`, newData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function playTrack(id) {
+    try {
+      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
+      dispatch({
+        type: "url",
+        payload: data.audio_file,
+      });
+      console.log(state.url);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const value = {
+    tracks: state.tracks,
+    oneTrack: state.oneTrack,
+    playerURL: state.url,
+    getTracks,
+    createTrack,
+    deleteTrack,
+    editTrack,
+    getOneTrack,
+    playTrack,
+  };
+  return (
+    <tracksContext.Provider value={value}>{children}</tracksContext.Provider>
+  );
 };
 
 export default TracksContext;

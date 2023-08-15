@@ -4,28 +4,20 @@ import "./style.css";
 
 const SearchPage = () => {
   const cardData = [
-    { id: "Для себя", color: "rgb(30, 50, 100)" },
-    { id: "Чарты", color: "rgb(71, 125, 149)" },
-    { id: "Новые релизы", color: "rgb(20, 138, 8)" },
-    { id: "Рекомендации", color: "rgb(245, 155, 35)" },
-    { id: "Мероприятия", color: "rgb(141, 103, 171)" },
-    { id: "Для дома", color: "rgb(30, 50, 100)" },
-    { id: "Настроение", color: "rgb(13, 115, 236)" },
-    { id: "Эпохи", color: "rgb(140, 25, 50)" },
-    { id: "Хип-хоп", color: "rgb(141, 103, 171)" },
-    { id: "В машине", color: "rgb(140, 25, 50)" },
-    { id: "Для геймеров", color: "rgb(71, 125, 149)" },
-    { id: "Забота о себе", color: "rgb(220, 20, 140)" },
-    { id: "League of legends", color: "rgb(220, 20, 140)" },
-    { id: "Тренировки", color: "rgb(186, 93, 7)" },
-    { id: "Релакс", color: "rgb(13, 115, 236)" },
-    { id: "Фокус", color: "rgb(30, 50, 100)" },
-    { id: "Сон", color: "rgb(141, 103, 171)" },
-    { id: "Вечеринка", color: "rgb(115, 88, 255)" },
+    { id: "Charts", color: "rgb(71, 125, 149)" },
+    { id: "Events", color: "rgb(141, 103, 171)" },
+    { id: "At Home", color: "rgb(30, 50, 100)" },
+    { id: "Eras", color: "rgb(140, 25, 50)" },
+    { id: "Hip-Hop", color: "rgb(141, 103, 171)" },
+    { id: "Wellness", color: "rgb(220, 20, 140)" },
+    { id: "Workout", color: "rgb(186, 93, 7)" },
+    { id: "Relax", color: "rgb(13, 115, 236)" },
+    { id: "Focus", color: "rgb(30, 50, 100)" },
+    { id: "Sleep", color: "rgb(141, 103, 171)" },
     { id: "Dance", color: "rgb(30, 50, 100)" },
-    { id: "Джаз", color: "rgb(186, 93, 7)" },
+    { id: "Jazz", color: "rgb(186, 93, 7)" },
   ];
-
+  
   return (
     <header>
       <div className="search-bar">
@@ -37,7 +29,7 @@ const SearchPage = () => {
         />
       </div>
       <div>
-        <h1 className="h1">Все остальное</h1>
+        <h1 className="h1">Browse All</h1>
       </div>
       <div className="card-container">
         {cardData.map((card, index) => (

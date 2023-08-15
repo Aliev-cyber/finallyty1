@@ -4,12 +4,13 @@ import BasePopover from "./components/BasePopover";
 import BaseToast from "./components/BaseToast";
 import TheMain from "./components/TheMain";
 import TheRegistration from "./components/TheRegistration";
-import ResponsivePlayer from "../Player";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 function HomePage() {
   const contentWrapperRef = useRef();
   const toastRef = useRef();
   const popoverRef = useRef();
+  const {user} = useAuthContext()
   let isScrollingEnabled = true;
 
   useEvent("wheel", handleScrolling, true, () => contentWrapperRef.current);
@@ -36,8 +37,7 @@ function HomePage() {
           <TheMain showToast={showToast} toggleScrolling={toggleScrolling} />
         </div>
       </div>
-      {/* <TheRegistration /> */}
-      <ResponsivePlayer />
+      {!user && <TheRegistration />}
       <BaseToast ref={toastRef} />
       <BasePopover ref={popoverRef} />
     </>
