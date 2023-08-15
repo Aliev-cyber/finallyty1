@@ -14,7 +14,6 @@ import Profile from "../pages/Profile";
 import ActivationPage from "../pages/ActivationPage";
 import ProtectedRoute from "./ProtectedRoutess";
 import LibraryPage from "../pages/LibraryPage";
-
 const MainRoutes = () => {
   return (
     <Routes>
@@ -22,12 +21,12 @@ const MainRoutes = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/liked" element={<LikedSongs />} />
           <Route path="/add" element={<AddPage />} />
-          <Route path="/library" element={<LibraryPage />} />
         </Route>
+          <Route path="/library" element={<LibraryPage />} />
 
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/details" element={<DetailsPage />} />
+        <Route path="/details/:id" element={<DetailsPage />} />
         <Route path="/search" element={<SearchPage />} />
       </Route>
 

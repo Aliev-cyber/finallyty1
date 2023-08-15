@@ -5,17 +5,16 @@ import useModal from '../hooks/useModal';
 import PlaylistCover from './PlaylistCover';
 import PlaylistButtonPlay from './PlaylistButtonPlay';
 import PlaylistTitle from './PlaylistTitle';
-import PlaylistDescription from './PlaylistDescription';
 import PlaylistContextMenu from './PlaylistContextMenu';
 import TheModalEmbedPlaylist from './TheModalEmbedPlaylist';
 import TheModalRecommendations from './TheModalRecommendations';
+import { useNavigate } from 'react-router-dom';
 
 function Playlist({
   classes,
   coverUrl,
   title,
-  description,
-  showToast,
+  id,
   toggleScrolling,
 }) {
   function generateMenuItems(isAlternate = false) {
@@ -27,41 +26,9 @@ function Playlist({
           document.querySelector('nav a:nth-child(4)').click();
         },
       },
-      {
-        label: 'Share',
-        submenuItems: [
-          {
-            label: isAlternate ? 'Copy Spotify URI' : 'Copy link to playlist',
-            classes: 'min-w-[150px]',
-            action: () => {
-              navigator.clipboard.writeText(title).then(() => {
-                menu.close();
-                showToast('Link copied to clipboard');
-              });
-            },
-          },
-          {
-            label: 'Embed playlist',
-            action: () => {
-              menu.close();
-              embedPlaylistModal.open();
-            },
-          },
-        ],
-      },
-      {
-        label: 'About recommendations',
-        action: () => {
-          menu.close();
-          recommendationsModal.open();
-        },
-      },
-      {
-        label: 'Open in Desktop app',
-      },
     ];
   }
-
+  const navigate = useNavigate()
   const [menuItems, setMenuItems] = useState(generateMenuItems);
   const menu = useMenu(menuItems);
   const embedPlaylistModal = useModal();
@@ -79,24 +46,26 @@ function Playlist({
   function handleAltKeyup({ key }) {
     if (key === 'Alt') setMenuItems(generateMenuItems());
   }
-
+  function handleClick(e) {
+    e.preventDefault()
+    navigate(`/tracks/${id}`)
+  }
   const bgClasses = menu.isOpen
     ? 'bg-[#272727]'
     : 'bg-[#181818] hover:bg-[#272727]';
 
   return (
-    <a
-      href="/"
+    <div
       className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
-      onClick={(event) => event.preventDefault()}
+      onClick={handleClick}
       onContextMenu={menu.open}
+      style={{cursor:'pointer'}}
     >
       <div className="relative">
         <PlaylistCover url={coverUrl} />
         <PlaylistButtonPlay />
       </div>
       <PlaylistTitle title={title} />
-      <PlaylistDescription description={description} />
       {menu.isOpen && (
         <PlaylistContextMenu
           ref={menu.ref}
@@ -110,7 +79,7 @@ function Playlist({
       {embedPlaylistModal.isOpen && (
         <TheModalEmbedPlaylist onClose={embedPlaylistModal.close} />
       )}
-    </a>
+    </div>
   );
 }
 

@@ -9,9 +9,13 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
   const {user} = useAuthContext()
   function handleClick(event) {
     event.preventDefault();
-    if(!user && link !== "/" && link !== "/search") {
+    if(!user && link === "create") {
       navigate('./auth')
       return
+    }
+    if(link === "create") {
+      return
+      //place for playlist
     }
     navigate(link);
   }

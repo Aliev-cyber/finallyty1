@@ -13,9 +13,17 @@ class ResponsivePlayer extends Component {
       played: 0,
       duration: 0,
       randomPosition: 0,
+      url: props.url,
     };
   }
-
+  componentDidUpdate(prevProps) {
+    if (this.props.url !== prevProps.url) {
+      this.setState({
+        playing: false,
+        url: this.props.url,
+      });
+    }
+  }
   generateRandomPosition = () => {
     const randomPosition = Math.random();
     this.setState({ randomPosition });
@@ -24,11 +32,12 @@ class ResponsivePlayer extends Component {
   handlePlayPause = () => {
     if (!this.state.playing) {
       this.generateRandomPosition();
+      this.setState({ playing: true }); 
+    } else {
+      this.setState({ playing: false }); 
     }
-    this.setState((prevState) => ({
-      playing: !prevState.playing,
-    }));
   };
+  
 
   handleProgress = (state) => {
     this.setState({
@@ -42,24 +51,29 @@ class ResponsivePlayer extends Component {
 
   handleSeek = (e) => {
     const played = parseFloat(e.target.value);
+  
     if (!this.state.playing) {
-      this.generateRandomPosition();
+      this.setState({
+        played,
+        randomPosition: played, // Update randomPosition when seeking while paused
+      });
+    } else {
+      this.setState({ played }, () => {
+        this.player.seekTo(played, 'fraction');
+      });
     }
-    this.setState({ played }, () => {
-      if (this.state.playing) {
-        this.player.seekTo(this.state.played);
-      }
-    });
   };
-
+  
+  
   render() {
+    const {url} = this.props
     return (
       <div className="player-wrapper">
         <div className="video-container">
           <ReactPlayer
             ref={(player) => (this.player = player)}
             className={`react-player ${this.state.playing ? "" : "hidden"}`}
-            url="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+            url={url}
             width="100%"
             height="100%"
             playing={this.state.playing}
@@ -69,6 +83,7 @@ class ResponsivePlayer extends Component {
             seekTo={
               this.state.playing ? this.state.played : this.state.randomPosition
             }
+            onClick={(e) => e.preventDefault()}
           />
           <div className="play-pause-icons">
             <SkipPreviousIcon className="control-icon" />

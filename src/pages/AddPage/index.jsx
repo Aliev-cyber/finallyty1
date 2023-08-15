@@ -10,7 +10,21 @@ const AddPage = () => {
   if (!user ||!user.is_staff) {
 		return <Navigate to="/" />;
 	}
-  const genres = ["Pop", "Rock", "Hip Hop", "Electronic", "Jazz", "Classical"];
+  const genres = [
+    "Charts",
+    "Events",
+    "At Home",
+    "Eras",
+    "Hip-Hop",
+    "Wellness",
+    "Workout",
+    "Relax",
+    "Focus",
+    "Sleep",
+    "Dance",
+    "Jazz"
+  ];
+  
   function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);

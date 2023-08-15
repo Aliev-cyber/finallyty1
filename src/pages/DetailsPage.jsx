@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./LikedSongs.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { Box } from "@mui/material";
@@ -15,27 +13,13 @@ const DetailsPage = () => {
       artist: "2PAC",
       date: "1996",
       duration: "3:30",
-      isLiked: false,
-      isHovered: false,
       lyrics:
         "I bet you got it twisted, you don't know who to trust So many player-hatin' - tryna sound like us Say they ready for the funk, but I don't think they knowin' Straight to the depths of Hell is where them cowards goin' Well, are you still down? Holla when you see me And let these devils be sorry for the day they finally freed me I got a caravan of - every time we ride Hittin' - up when we pass by",
     },
   ]);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const handleToggleLike = (index) => {
-    const updatedLikedSongs = [...likedSongs];
-    updatedLikedSongs[index].isLiked = !updatedLikedSongs[index].isLiked;
-    setLikedSongs(updatedLikedSongs);
-  };
-
-  const handleHover = (index, isHovered) => {
-    const updatedLikedSongs = [...likedSongs];
-    updatedLikedSongs[index].isHovered = isHovered;
-    setLikedSongs(updatedLikedSongs);
-  };
-
+  
   return (
     <div className="liked-songs-container">
       {likedSongs.map((item, index) => (

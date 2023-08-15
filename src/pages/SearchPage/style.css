@@ -30,76 +30,96 @@
   outline: none;
 }
 
-@media screen and (max-width: 500px) {
-  .search-bar {
-    width: 20rem;
-  }
-  .search-input {
-    font-size: 17px;
-  }
-}
 .card-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center; /* Center the cards horizontally */
 }
 
 .card {
   position: relative;
-  width: 200px;
-  height: 200px;
-  margin-left: 30px;
-  background: lightgrey;
+  width: 220px;
+  height: 220px;
+  margin: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   overflow: hidden;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  transition: all 1s ease-in-out;
-  margin-top: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.background {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 100% 107%,
-    #092114 0%,
-    #040e20 30%,
-    #0cec35 60%,
-    #62c2fe 100%
-  );
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
 }
 
 .logo {
   position: absolute;
-  right: 50%;
-  bottom: 50%;
-  font-size: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 24px;
   color: white;
-  transform: translate(50%, 50%);
-  transition: all 0.6s ease-in-out;
+  margin: 0;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transition: font-size 0.3s ease-in-out;
+}
+
+.card:hover .card-title {
+  font-size: 28px;
 }
 
 .box {
   position: absolute;
+  bottom: 0;
+  right: 0;
   padding: 10px;
   text-align: right;
-  background: rgba(255, 255, 255, 0.389);
+  background: rgba(255, 255, 255, 0.9);
   border-top: 2px solid rgb(255, 255, 255);
   border-right: 1px solid white;
-  border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
+  border-radius: 0 0 10px 0;
   box-shadow: rgba(100, 100, 111, 0.364) -7px 7px 29px 0px;
   transform-origin: bottom left;
-  transition: all 1s ease-in-out;
+  transition: 0.3s;
+  opacity: 0;
+  pointer-events: none; /* Prevent box from blocking clicks */
+}
+
+.card:hover .box {
+  opacity: 1;
+}
+
+.logo h1 {
+  margin: 0;
+  padding: 5px;
+  color: #fff;
+  font-size: 2rem;
+  transition: 0.2s;
+}
+
+.logo h1:hover {
+  color: #aaa;
+  font-size: 2.5rem;
+
 }
 
 .box::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   opacity: 0;
-  transition: all 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
-.h1 {
-  color: white;
-  font-size: 25px;
-  margin-left: 27px;
+
+.card:hover .box::before {
+  opacity: 1;
 }
