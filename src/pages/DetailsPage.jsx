@@ -7,17 +7,18 @@ import { useTracksContext } from "../contexts/TracksContext";
 import { useParams } from "react-router-dom";
 
 const DetailsPage = () => {
-  const { getOneTrack, oneTrack } = useTracksContext();
+  const { getOneTrack, oneTrack, clearURL } = useTracksContext();
   const { playTrack } = useTracksContext("");
   const [track, setTrack] = useState({});
   const { id } = useParams();
   useEffect(() => {
+    clearURL()
     getOneTrack(id);
   }, [id]);
   useEffect(() => {
     if (oneTrack) {
       setTrack({ ...oneTrack });
-      playTrack("");
+      clearURL();
     }
   }, [oneTrack]);
   function handleClick() {
