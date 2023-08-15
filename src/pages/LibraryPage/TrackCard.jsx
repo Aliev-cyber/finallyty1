@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { useTracksContext } from '../../contexts/TracksContext';
+import { useNavigate } from 'react-router-dom';
 
 const TrackCard = ({ track }) => {
-  const {playTrack} = useTracksContext()
+  const navigate = useNavigate('')
   function handleClick() {
-    playTrack(track.id)
+    navigate(`/details/${track.id}`)
   }
   function formatDuration(seconds) {
     const minutes = Math.floor(seconds / 60);

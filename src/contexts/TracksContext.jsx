@@ -82,14 +82,17 @@ const TracksContext = ({ children }) => {
   }
   async function playTrack(id) {
     try {
-      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}/`);
+      const { data } = await $axios.get(`${BASE_URL}/music-tracks/${id}`);
       dispatch({
         type: "url",
         payload: data.audio_file,
       });
       console.log(state.url);
     } catch (error) {
-      console.log(error);
+		dispatch({
+			type: "url",
+			payload: "",
+		  });
     }
   }
   const value = {
