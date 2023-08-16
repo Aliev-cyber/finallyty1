@@ -1,28 +1,24 @@
-import { useState, useLayoutEffect } from 'react';
-import useEvent from '../hooks/useEvent';
-import useMenu from '../hooks/useContextMenu';
-import useModal from '../hooks/useModal';
-import PlaylistCover from './PlaylistCover';
-import PlaylistButtonPlay from './PlaylistButtonPlay';
-import PlaylistTitle from './PlaylistTitle';
-import PlaylistContextMenu from './PlaylistContextMenu';
-import TheModalEmbedPlaylist from './TheModalEmbedPlaylist';
-import TheModalRecommendations from './TheModalRecommendations';
-import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useState, useLayoutEffect } from "react";
+import useEvent from "../hooks/useEvent";
+import useMenu from "../hooks/useContextMenu";
+import useModal from "../hooks/useModal";
+import PlaylistCover from "./PlaylistCover";
+import PlaylistButtonPlay from "./PlaylistButtonPlay";
+import PlaylistTitle from "./PlaylistTitle";
+import PlaylistContextMenu from "./PlaylistContextMenu";
+import TheModalEmbedPlaylist from "./TheModalEmbedPlaylist";
+import TheModalRecommendations from "./TheModalRecommendations";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
-function Playlist({
-  classes,
-  cover_image,
-  title,
-  id,
-  toggleScrolling,
-}) {
-  const {toggleFavorite, favorites, checkFavorite} = useAuthContext()
+function Playlist({ classes, cover_image, title, id, toggleScrolling }) {
+  const { toggleFavorite, favorites, checkFavorite } = useAuthContext();
   function generateMenuItems(isAlternate = false) {
     return [
       {
-        label: !checkFavorite(id)?'Add to Your Library':"Remove from Your Library",
+        label: !checkFavorite(id)
+          ? "Add to Your Library"
+          : "Remove from Your Library",
         action: () => {
           menu.close();
           toggleFavorite(id);
@@ -30,7 +26,7 @@ function Playlist({
       },
     ];
   }
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [menuItems, setMenuItems] = useState(generateMenuItems);
   const menu = useMenu(menuItems);
   const embedPlaylistModal = useModal();
@@ -38,29 +34,29 @@ function Playlist({
 
   useLayoutEffect(() => toggleScrolling(!menu.isOpen));
 
-  useEvent('keydown', handleAltKeydown, menu.isOpen);
-  useEvent('keyup', handleAltKeyup, menu.isOpen);
+  useEvent("keydown", handleAltKeydown, menu.isOpen);
+  useEvent("keyup", handleAltKeyup, menu.isOpen);
 
   function handleAltKeydown({ key }) {
-    if (key === 'Alt') setMenuItems(generateMenuItems(true));
+    if (key === "Alt") setMenuItems(generateMenuItems(true));
   }
 
   function handleAltKeyup({ key }) {
-    if (key === 'Alt') setMenuItems(generateMenuItems());
+    if (key === "Alt") setMenuItems(generateMenuItems());
   }
   function handleClick(e) {
-    e.preventDefault()
-    navigate(`/details/${id}`)
+    e.preventDefault();
+    navigate(`/details/${id}`);
   }
   const bgClasses = menu.isOpen
-    ? 'bg-[#272727]'
-    : 'bg-[#181818] hover:bg-[#272727]';
+    ? "bg-[#272727]"
+    : "bg-[#181818] hover:bg-[#272727]";
 
   return (
     <div
       className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
       onContextMenu={menu.open}
-      style={{cursor:'pointer'}}
+      style={{ cursor: "pointer" }}
       onMouseEnter={() => setMenuItems(generateMenuItems())}
       onMouseLeave={() => {
         setMenuItems([]);
@@ -69,23 +65,17 @@ function Playlist({
         }
       }}
     >
-      <div className="relative">
-        <PlaylistCover url={cover_image} onClick={handleClick}/>
+      <div className="relative" onClick={handleClick}>
+        <PlaylistCover url={cover_image} />
         <PlaylistButtonPlay />
       </div>
-      <PlaylistTitle title={title} onClick={handleClick}/>
+      <PlaylistTitle title={title} onClick={handleClick} />
       {menu.isOpen && (
         <PlaylistContextMenu
           ref={menu.ref}
           menuItems={menu.items}
           classes="fixed divide-y divide-[#3e3e3e]"
         />
-      )}
-      {recommendationsModal.isOpen && (
-        <TheModalRecommendations onClose={recommendationsModal.close} />
-      )}
-      {embedPlaylistModal.isOpen && (
-        <TheModalEmbedPlaylist onClose={embedPlaylistModal.close} />
       )}
     </div>
   );

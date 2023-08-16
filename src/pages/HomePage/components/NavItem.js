@@ -13,10 +13,6 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
       navigate('./auth')
       return
     }
-    if(link === "create") {
-      return
-      //place for playlist
-    }
     navigate(link);
   }
   return (
@@ -27,7 +23,6 @@ function NavItem({ classes, icon, onClick, link, children: label }) {
         {label}
       </span>
     </a>
-    {link === 'create' && user ? (<PlaylistList/>) : (null)}
     </div>
   );
 }
