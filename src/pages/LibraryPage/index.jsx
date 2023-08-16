@@ -3,14 +3,30 @@ import { Grid } from "@mui/material";
 import TrackCard from "./TrackCard";
 import { useTracksContext } from "../../contexts/TracksContext";
 import Pagination from "../../components/Pagination";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const LibraryPage = () => {
-  const { tracks, getTracks} = useTracksContext();
-	const [searchParams] = useSearchParams();
-
+  const { tracks, getTracks, page } = useTracksContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { genre } = useParams();
   useEffect(() => {
-    getTracks();
+    const currentParams = Object.fromEntries([...searchParams]);
+    if (genre) {
+      setSearchParams({
+        ...currentParams,
+        genre_like: genre,
+        _page: page,
+        _limit: 12
+      });
+      getTracks();
+    } else {
+      setSearchParams({
+        ...currentParams,
+        _page: page,
+        _limit: 12
+      });
+      getTracks();
+    }
   }, [searchParams]);
 
   return (
@@ -19,11 +35,12 @@ const LibraryPage = () => {
         Welcome to your Library
       </h1>
       <Grid container spacing={2}>
-        {tracks && tracks.map((track) => {
-            return <TrackCard track={track} key={track.id}/>
-      })}
+        {tracks &&
+          tracks.map((track) => {
+            return <TrackCard track={track} key={track.id} />;
+          })}
       </Grid>
-      <Pagination/>
+      <Pagination />
     </div>
   );
 };

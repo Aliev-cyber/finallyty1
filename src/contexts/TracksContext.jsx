@@ -40,8 +40,6 @@ const TracksContext = ({ children }) => {
   const API = "http://localhost:8000/tracks";
   async function getTracks() {
     try {
-      const genre = searchParams.get("genre_like") || "";
-      const search = searchParams.get("title_like") || "";
       const { data, headers } = await axios.get(
         `${API}${window.location.search}`,
       );

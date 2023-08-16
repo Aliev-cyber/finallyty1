@@ -23,6 +23,7 @@ const MainRoutes = () => {
           <Route path="/add" element={<AddPage />} />
         </Route>
           <Route path="/library" element={<LibraryPage />} />
+          <Route path="/library/:genre" element={<LibraryPage />} />
 
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/" element={<HomePage />} />

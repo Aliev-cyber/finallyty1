@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "./style.css";
 import { useTracksContext } from "../../contexts/TracksContext";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TrackCard from "../LibraryPage/TrackCard";
 import { Grid } from "@mui/material";
 
@@ -10,7 +10,7 @@ const SearchPage = () => {
   const cardData = [
     { id: "Charts", color: "rgb(71, 125, 149)" },
     { id: "Events", color: "rgb(141, 103, 171)" },
-    { id: "At Home", color: "rgb(30, 50, 100)" },
+    { id: "At-Home", color: "rgb(30, 50, 100)" },
     { id: "Eras", color: "rgb(140, 25, 50)" },
     { id: "Hip-Hop", color: "rgb(141, 103, 171)" },
     { id: "Wellness", color: "rgb(220, 20, 140)" },
@@ -27,7 +27,7 @@ const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [byTitle, setByTitle] = useState([]);
   const [byArtist, setByArtist] = useState([]);
-
+  const navigate = useNavigate()
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -119,7 +119,7 @@ const SearchPage = () => {
                 style={{ background: card.color }}
               >
                 <div className="logo">
-                  <h1>{card.id}</h1>
+                  <h1 onClick={() => navigate(`/library/${card.id}`)}>{card.id}</h1>
                 </div>
               </div>
             ))}
