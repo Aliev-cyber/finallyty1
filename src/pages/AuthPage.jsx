@@ -49,12 +49,9 @@ export default function SignUp() {
       password: data.get("password"),
       password_confirmation: data.get("password_confirm"),
     });
+    navigate("/")
   };
-  // if (user) {
-  //   return <Navigate to="/" />;
-  // }
 
-  // fix navigation here after activate page
 
   return (
     <ThemeProvider theme={defaultTheme}>
