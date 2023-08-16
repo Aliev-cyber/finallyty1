@@ -41,7 +41,7 @@ const TracksContext = ({ children }) => {
   async function getTracks() {
     try {
       const { data, headers } = await axios.get(
-        `${API}${window.location.search}`,
+        `${API}${window.location.search}`
       );
       console.log("getTracks data:", data);
       const totalCount = Math.ceil(headers["x-total-count"] / 12);
@@ -54,7 +54,7 @@ const TracksContext = ({ children }) => {
         type: "tracks",
         payload: data,
       });
-      return data
+      return data;
     } catch (e) {
       console.log(e);
     }
@@ -123,6 +123,38 @@ const TracksContext = ({ children }) => {
       payload: null,
     });
   }
+  async function rateTrack(trackId, username, value) {
+    try {
+      const trackResponse = await axios.get(`${API}/${trackId}`);
+      const track = trackResponse.data;
+
+      const existingRatingIndex = track.rating.findIndex(
+        (rating) => rating.username === username
+      );
+
+      if (existingRatingIndex === -1) {
+        const updatedRating = [
+          ...track.rating,
+          { username: username, value: value },
+        ];
+        await axios.patch(`${API}/${trackId}`, {
+          rating: updatedRating,
+        });
+        getOneTrack(trackId);
+      } else {
+        const updatedRating = [...track.rating];
+        updatedRating[existingRatingIndex].value = value;
+
+        await axios.patch(`${API}/${trackId}`, {
+          rating: updatedRating,
+        });
+        getOneTrack(trackId);
+      }
+    } catch (error) {
+      console.error("Error rating track:", error);
+    }
+  }
+
   const value = {
     tracks: state.tracks,
     oneTrack: state.oneTrack,
@@ -137,6 +169,7 @@ const TracksContext = ({ children }) => {
     getOneTrack,
     playTrack,
     clearURL,
+    rateTrack
   };
   return (
     <tracksContext.Provider value={value}>{children}</tracksContext.Provider>

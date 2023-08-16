@@ -8,7 +8,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 const TrackCard = ({ track }) => {
   const navigate = useNavigate("");
-  const {toggleFavorite, checkFavorite} = useAuthContext()
+  const { toggleFavorite, checkFavorite} = useAuthContext()
   function handleClick() {
     navigate(`/details/${track.id}`);
   }

@@ -9,21 +9,23 @@ import PlaylistContextMenu from './PlaylistContextMenu';
 import TheModalEmbedPlaylist from './TheModalEmbedPlaylist';
 import TheModalRecommendations from './TheModalRecommendations';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 function Playlist({
   classes,
-  coverUrl,
+  cover_image,
   title,
   id,
   toggleScrolling,
 }) {
+  const {toggleFavorite, favorites, checkFavorite} = useAuthContext()
   function generateMenuItems(isAlternate = false) {
     return [
       {
-        label: 'Add to Your Library',
+        label: !checkFavorite(id)?'Add to Your Library':"Remove from Your Library",
         action: () => {
           menu.close();
-          document.querySelector('nav a:nth-child(4)').click();
+          toggleFavorite(id);
         },
       },
     ];
@@ -48,7 +50,7 @@ function Playlist({
   }
   function handleClick(e) {
     e.preventDefault()
-    navigate(`/tracks/${id}`)
+    navigate(`/details/${id}`)
   }
   const bgClasses = menu.isOpen
     ? 'bg-[#272727]'
@@ -57,15 +59,21 @@ function Playlist({
   return (
     <div
       className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
-      onClick={handleClick}
       onContextMenu={menu.open}
       style={{cursor:'pointer'}}
+      onMouseEnter={() => setMenuItems(generateMenuItems())}
+      onMouseLeave={() => {
+        setMenuItems([]);
+        if (menu.isOpen) {
+          menu.close();
+        }
+      }}
     >
       <div className="relative">
-        <PlaylistCover url={coverUrl} />
+        <PlaylistCover url={cover_image} onClick={handleClick}/>
         <PlaylistButtonPlay />
       </div>
-      <PlaylistTitle title={title} />
+      <PlaylistTitle title={title} onClick={handleClick}/>
       {menu.isOpen && (
         <PlaylistContextMenu
           ref={menu.ref}

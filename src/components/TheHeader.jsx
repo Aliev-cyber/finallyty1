@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import React from "react";
 import BaseButton from "../pages/HomePage/components/BaseButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -23,6 +23,10 @@ const StyledMenu = styled(Menu)(() => ({
 function TheHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, logout } = useAuthContext();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,8 +42,15 @@ function TheHeader() {
     handleClose();
     navigate(`/profile/${user.username}`);
   }
+  
 
-  const navigate = useNavigate();
+  const goToPreviousPage = () => {
+    navigate(-1);
+  };
+
+  const goToNextPage = () => {
+    navigate(1);
+  };
 
   React.useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -64,12 +75,12 @@ function TheHeader() {
         >
           <Bars3Icon className="h-6 w-6" />
         </a>
-        <a href="/" className="mr-[8px] text-[#969696] p-1 cursor-not-allowed">
+        <h3 onClick={goToPreviousPage} className="mr-[8px] text-[#969696] p-1 cursor-pointer">
           <ChevronLeftIcon className="h-6 w-6" />
-        </a>
-        <a href="/" className="ml-[8px] text-[#969696] p-1 cursor-not-allowed">
+        </h3>
+        <h3 onClick={goToNextPage} className="ml-[8px] text-[#969696] p-1 cursor-pointer">
           <ChevronRightIcon className="h-6 w-6" />
-        </a>
+        </h3>
       </div>
       {user && user.is_staff && (
         <BaseButton

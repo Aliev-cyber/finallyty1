@@ -1,41 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import Playlist from "./Playlist";
+import { useTracksContext } from "../../../contexts/TracksContext";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
-const playlists = [
-  {
-    classes: "",
-    title: "Playlist title 1",
-    coverUrl: "https://fakeimg.pl/600/7f1d1d/fff?text=Cover&font=lobster",
-    id: "1"
-  },
-  {
-    classes: "hidden sm:block",
-    title: "Playlist title 2",
-    coverUrl: "https://fakeimg.pl/600/365314/fff?text=Cover&font=lobster",
-    id: "2"
-  },
-  {
-    classes: "hidden lg:block",
-    title: "Playlist title 3",
-    coverUrl: "https://fakeimg.pl/600/164e63/fff?text=Cover&font=lobster",
-    id: "3"
-  },
-  {
-    classes: "hidden xl:block",
-    title: "Playlist title 4",
-    coverUrl: "https://fakeimg.pl/600/1e3a8a/fff?text=Cover&font=lobster",
-    id: "4"
-  },
-  {
-    classes: "hidden 2xl:block",
-    title: "Playlist title 5",
-    coverUrl: "https://fakeimg.pl/600/365314/fff?text=Cover&font=lobster",
-    id: "5"
-  },
-];
 
 function TheMain({ showToast, toggleScrolling }) {
   const navigate = useNavigate();
+  const {tracks, getTracks} = useTracksContext()
+  useEffect(() => {
+    getTracks()
+  },[])
   return (
     <main className="text-white relative">
       <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div>
@@ -49,7 +24,7 @@ function TheMain({ showToast, toggleScrolling }) {
             </div>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
-            {playlists.map((playlist) => (
+            {tracks.slice(0,5).map((playlist) => (
               <Playlist
                 key={playlist.id}
                 showToast={showToast}
@@ -70,9 +45,9 @@ function TheMain({ showToast, toggleScrolling }) {
             </div>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
-            {playlists.map((playlist) => (
+            {tracks.slice(0,5).map((playlist) => (
               <Playlist
-                key={playlist.title}
+                key={playlist.id}
                 showToast={showToast}
                 toggleScrolling={toggleScrolling}
                 {...playlist}

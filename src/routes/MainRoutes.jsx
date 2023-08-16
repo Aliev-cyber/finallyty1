@@ -6,13 +6,13 @@ import LikedSongs from "../pages/LikedSongs";
 import AuthPage from "../pages/AuthPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
-
 import SearchPage from "../pages/SearchPage";
 import DetailsPage from "../pages/DetailsPage";
 import AddPage from "../pages/AddPage";
 import Profile from "../pages/Profile";
 import ActivationPage from "../pages/ActivationPage";
 import ProtectedRoute from "./ProtectedRoutess";
+import Tracks from "../pages/Tracks";
 import LibraryPage from "../pages/LibraryPage";
 const MainRoutes = () => {
   return (
@@ -21,9 +21,10 @@ const MainRoutes = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/liked" element={<LikedSongs />} />
           <Route path="/add" element={<AddPage />} />
-        </Route>
           <Route path="/library" element={<LibraryPage />} />
-          <Route path="/library/:genre" element={<LibraryPage />} />
+        </Route>
+        <Route path="/tracks" element={<Tracks />} />
+        <Route path="/tracks/:genre" element={<Tracks />} />
 
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/" element={<HomePage />} />

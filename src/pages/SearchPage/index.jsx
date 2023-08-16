@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./style.css";
 import { useTracksContext } from "../../contexts/TracksContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import TrackCard from "../LibraryPage/TrackCard";
+import TrackCard from "../Tracks/TrackCard";
 import { Grid } from "@mui/material";
 
 const SearchPage = () => {
@@ -27,13 +27,9 @@ const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [byTitle, setByTitle] = useState([]);
   const [byArtist, setByArtist] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-  };
-
-  const handleGenreChange = (event) => {
-    setSelectedGenre(event.target.value);
   };
 
   useEffect(() => {
@@ -117,9 +113,10 @@ const SearchPage = () => {
                 className="card"
                 key={index}
                 style={{ background: card.color }}
+                onClick={() => navigate(`/library/${card.id}`)}
               >
                 <div className="logo">
-                  <h1 onClick={() => navigate(`/library/${card.id}`)}>{card.id}</h1>
+                  <h1>{card.id}</h1>
                 </div>
               </div>
             ))}
