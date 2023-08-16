@@ -123,3 +123,9 @@
 .card:hover .box::before {
   opacity: 1;
 }
+.h1 {
+  color: #fff;
+  font-size: 3rem;
+  margin: 2rem 40%;
+  cursor: pointer;
+}

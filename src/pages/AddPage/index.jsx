@@ -15,7 +15,7 @@ const AddPage = () => {
   const genres = [
     "Charts",
     "Events",
-    "At Home",
+    "At-Home",
     "Eras",
     "Hip-Hop",
     "Wellness",
