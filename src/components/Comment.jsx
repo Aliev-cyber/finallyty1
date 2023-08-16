@@ -9,12 +9,14 @@ import CardActions from "@mui/material/CardActions";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useCommentContext } from "../contexts/CommentContext";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
   const { user } = useAuthContext();
   const { deleteComment, likeComment } = useCommentContext();
   const [likeCount, setLikeCount] = useState(item.likes.length);
   const [isActive, setIsActive] = useState(false);
+  const navigate = useNavigate()
   function handleDelete() {
     if (inProfile) {
       deleteComment(item.id, "user.username", userProfile.username);
@@ -30,8 +32,7 @@ const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
       likeComment(item.id, user.username, "user.username", user.username);
       return;
     }
-    likeComment(item.id, user.email, "trackId", id);
-    console.log(item.likes);
+    likeComment(item.id, user.username, "trackId", id);
   }
   useEffect(() => {
     if (user) {
@@ -62,6 +63,7 @@ const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
               variant="h5"
               component="div"
               sx={{ cursor: "pointer", marginBottom: "1rem" }}
+              onClick={() => navigate(`/profile/${commentUser.username}`)}
             >
               {commentUser.username}
             </Typography>
@@ -73,6 +75,7 @@ const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
                 cursor: "pointer",
                 marginBottom: "1rem",
               }}
+              onClick={() => navigate(`/profile/${commentUser.username}`)}
             />
           </div>
           <Typography

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-const API_COMMENTS = "http://localhost:8000/comments"
+const API_COMMENTS = "http://localhost:8000/comments";
 const commentContext = createContext();
 
 export function useCommentContext() {
@@ -9,7 +9,7 @@ export function useCommentContext() {
 
 const CommentContext = ({ children }) => {
   const [comments, setComments] = useState([]);
- 
+
   async function getComments(key, value) {
     const { data } = await axios.get(API_COMMENTS, {
       params: {
@@ -31,17 +31,23 @@ const CommentContext = ({ children }) => {
     try {
       const commentResponse = await axios.get(`${API_COMMENTS}/${commentId}`);
       const comment = commentResponse.data;
-  
+
       if (!comment.likes.includes(username)) {
         const updatedLikes = [...comment.likes, username];
-        await axios.patch(`${API_COMMENTS}/${commentId}`, { likes: updatedLikes });
-        getComments(key, value)
+        await axios.patch(`${API_COMMENTS}/${commentId}`, {
+          likes: updatedLikes,
+        });
+        getComments(key, value);
         console.log("Comment liked successfully.");
       } else {
-        const updatedLikes = comment.likes.filter((userName) => userName !== username);
-        await axios.patch(`${API_COMMENTS}/${commentId}`, { likes: updatedLikes });
+        const updatedLikes = comment.likes.filter(
+          (userName) => userName !== username
+        );
+        await axios.patch(`${API_COMMENTS}/${commentId}`, {
+          likes: updatedLikes,
+        });
         console.log("Comment unliked successfully.");
-        getComments(key, value)
+        getComments(key, value);
       }
     } catch (error) {
       console.error("Error liking/unliking comment:", error);
@@ -52,7 +58,7 @@ const CommentContext = ({ children }) => {
     getComments,
     addComment,
     deleteComment,
-    likeComment
+    likeComment,
   };
 
   return (

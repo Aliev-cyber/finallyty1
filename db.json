@@ -188,18 +188,5 @@
       "id": 26
     }
   ],
-  "comments": [   
-    {
-    "comment": "sad",
-    "user": {
-      "username": "pop",
-      "avatar": null
-    },
-    "trackId": 2,
-    "likes": [
-      "pop"
-    ],
-    "id": 1
-  }
-]
+  "comments": []
 }

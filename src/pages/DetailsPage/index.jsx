@@ -3,7 +3,16 @@ import "../LikedSongs.css";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
@@ -16,14 +25,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const DetailsPage = () => {
   const { getOneTrack, oneTrack, clearURL, playTrack } = useTracksContext();
   const { user } = useAuthContext();
-  const {comments, addComment} = useCommentContext()
+  const { comments, addComment } = useCommentContext();
   const [track, setTrack] = useState({});
   const { id } = useParams();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState(false);
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
       getOneTrack(id);
@@ -47,7 +57,8 @@ const DetailsPage = () => {
   function handleEdit() {
     setOpenEditModal(true);
   }
-  const handleAddComment = () => {
+  const handleAddComment = (e) => {
+    e.preventDefault()
     if (!user) {
       navigate("/auth");
       return;
@@ -100,10 +111,7 @@ const DetailsPage = () => {
               <IconButton onClick={handleDelete} style={{ color: "red" }}>
                 <DeleteIcon sx={{ fontSize: "4rem" }} />
               </IconButton>
-              <IconButton
-                onClick={handleEdit}
-                style={{color: "green" }}
-              >
+              <IconButton onClick={handleEdit} style={{ color: "green" }}>
                 <EditIcon sx={{ fontSize: "4rem" }} />
               </IconButton>
             </div>
@@ -136,21 +144,27 @@ const DetailsPage = () => {
       </Box>
       <Box sx={{ width: "80%", margin: "2rem auto" }}>
         <Box sx={{ my: 3 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <form style={{ display: "flex", alignItems: "center" }} onSubmit={handleAddComment}>
             <TextField
               label="Add Comment"
               variant="outlined"
               fullWidth
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              sx={{
+                "& .MuiInputBase-input": {
+                  background:'white'
+                },
+              }}
             />
             <Button
               variant="contained"
+              sx={{ ml: 2 }}
               onClick={handleAddComment}
-              sx={{ ml: 2 }}>
+            >
               Add
             </Button>
-          </Box>
+          </form>
         </Box>
 
         <Accordion expanded={showComments}>
@@ -158,16 +172,14 @@ const DetailsPage = () => {
             expandIcon={<ExpandMoreIcon />}
             onClick={() => setShowComments(!showComments)}
             aria-controls="comment-panel-content"
-            id="comment-panel-header">
+            id="comment-panel-header"
+          >
             <Typography variant="h4" my={3}>
               Comments ({comments.length})
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <CommentList
-              track={track}
-              showComments={showComments}
-            />
+            <CommentList track={track} showComments={showComments} />
           </AccordionDetails>
         </Accordion>
       </Box>
