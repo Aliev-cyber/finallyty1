@@ -10,17 +10,17 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useCommentContext } from "../contexts/CommentContext";
 import { useNavigate } from "react-router-dom";
-
-const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
+const Comment = ({ item, commentUser, id, inProfile, userProfile, link }) => {
   const { user } = useAuthContext();
   const { deleteComment, likeComment } = useCommentContext();
   const [likeCount, setLikeCount] = useState(item.likes.length);
   const [isActive, setIsActive] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function handleDelete() {
     if (inProfile) {
       deleteComment(item.id, "user.username", userProfile.username);
-      return
+      return;
     }
     deleteComment(item.id, "trackId", id);
   }
@@ -94,11 +94,12 @@ const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
               marginLeft: "1.5rem",
             }}
           >
-            {user && (user.is_staff || user.username === commentUser.username) && (
-              <IconButton onClick={handleDelete}>
-                <DeleteOutlineIcon />
-              </IconButton>
-            )}
+            {user &&
+              (user.is_staff || user.username === commentUser.username) && (
+                <IconButton onClick={handleDelete}>
+                  <DeleteOutlineIcon />
+                </IconButton>
+              )}
             <div>
               <IconButton
                 color={isActive ? "primary" : "default"}
@@ -110,6 +111,14 @@ const Comment = ({ item, commentUser, id, inProfile, userProfile }) => {
                 {likeCount}
               </Typography>
             </div>
+            {inProfile && (
+              <IconButton
+                color={isActive ? "primary" : "default"}
+                onClick={() => link(item.trackId)}
+              >
+                <ReplyAllIcon />
+              </IconButton>
+            )}
           </CardActions>
         </CardContent>
       </Card>
