@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
 import { BASE_URL } from "../utils/consts";
 import axios from "axios";
-import $axios from "../utils/axios"
+import $axios from "../utils/axios";
 import { useSearchParams } from "react-router-dom";
 
 const tracksContext = createContext();
@@ -15,6 +15,7 @@ const initState = {
   oneTrack: null,
   url: "",
   totalPages: 1,
+  search: "",
 };
 
 function reducer(state, action) {
@@ -34,38 +35,32 @@ function reducer(state, action) {
 
 const TracksContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
-	const [searchParams, setSearchParams] = useSearchParams();
-	const [page, setPage] = useState(+searchParams.get("_page") || 1);
-  const API = "http://localhost:8000/tracks"
-	async function getTracks() {
-		try {
-			const { data, headers } = await axios.get(
-				`${API}${window.location.search}`,
-        {
-          params: {
-            title_like: state.search,
-            genre_like: state.search,
-            artist_like: state.search,
-            _page: page,
-            _limit: 12,
-          },
-        }
-			);
-			console.log("getTracks data:",data);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(+searchParams.get("_page") || 1);
+  const API = "http://localhost:8000/tracks";
+  async function getTracks() {
+    try {
+      const genre = searchParams.get("genre_like") || "";
+      const search = searchParams.get("title_like") || "";
+      const { data, headers } = await axios.get(
+        `${API}${window.location.search}`,
+      );
+      console.log("getTracks data:", data);
       const totalCount = Math.ceil(headers["x-total-count"] / 12);
-			dispatch({
-				type: "totalPages",
-				payload: totalCount,
-			});
+      dispatch({
+        type: "totalPages",
+        payload: totalCount,
+      });
 
-			dispatch({
-				type: "tracks",
-				payload: data,
-			});
-		} catch (e) {
-			console.log(e);
-		}
-	}
+      dispatch({
+        type: "tracks",
+        payload: data,
+      });
+      return data
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async function getOneTrack(id) {
     try {
       const { data } = await axios.get(`${API}/${id}`);
@@ -81,7 +76,7 @@ const TracksContext = ({ children }) => {
   async function createTrack(track) {
     try {
       await axios.post(API, track);
-      setPage(1)
+      setPage(1);
       getTracks();
     } catch (e) {
       console.log(e);
@@ -91,7 +86,7 @@ const TracksContext = ({ children }) => {
   async function deleteTrack(id) {
     try {
       await axios.delete(`${API}/${id}`);
-      setPage(1)
+      setPage(1);
       getTracks();
     } catch (e) {
       if (e.response.status === 500) {
@@ -135,8 +130,8 @@ const TracksContext = ({ children }) => {
     oneTrack: state.oneTrack,
     playerURL: state.url,
     totalPages: state.totalPages,
-		page,
-		setPage,
+    page,
+    setPage,
     getTracks,
     createTrack,
     deleteTrack,
