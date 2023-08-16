@@ -51,6 +51,7 @@ async function refreshAccessToken() {
             refresh: LSData.tokens.refresh,
           },
           id: LSData.id,
+          favorites: LSData.favorites,
         })
       );
       return data.access;

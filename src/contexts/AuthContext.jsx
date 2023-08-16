@@ -31,6 +31,9 @@ function reducer(state, action) {
 const AuthContext = ({ children }) => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initState);
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("LSData"))?.favorites || []
+  );
 
   async function register(credentials) {
     try {
@@ -46,19 +49,16 @@ const AuthContext = ({ children }) => {
         `${BASE_URL}/login/`,
         credentials
       );
-      console.log("what we send to back in body for login: ",credentials);
-      console.log("tokens we got: ",tokens);
+      console.log("what we send to back in body for login: ", credentials);
+      console.log("tokens we got: ", tokens);
 
       console.log({
-        username: credentials.username
+        username: credentials.username,
       });
-      const { data } = await axios.post(
-        `${BASE_URL}/api/api/user/`,
-        {
-          username : credentials.username
-        }
-      );
-        console.log("what api api user returns: ",data);
+      const { data } = await axios.post(`${BASE_URL}/api/api/user/`, {
+        username: credentials.username,
+      });
+      console.log("what api api user returns: ", data);
       dispatch({
         type: "user",
         payload: data,
@@ -66,7 +66,8 @@ const AuthContext = ({ children }) => {
       const LSData = {
         tokens: tokens,
         id: data.id,
-      }
+        favorites: [],
+      };
       localStorage.setItem("LSData", JSON.stringify(LSData));
     } catch (e) {
       console.log(e);
@@ -126,7 +127,9 @@ const AuthContext = ({ children }) => {
   }
   async function getOneUser(username) {
     try {
-      const { data } = await axios.post(`${BASE_URL}/api/api/user/`, {username : username});
+      const { data } = await axios.post(`${BASE_URL}/api/api/user/`, {
+        username: username,
+      });
       dispatch({
         type: "oneUser",
         payload: data,
@@ -136,6 +139,19 @@ const AuthContext = ({ children }) => {
       console.log(e);
     }
   }
+  const toggleFavorite = (id) => {
+    const LSData = JSON.parse(localStorage.getItem("LSData")) || {};
+    const updatedFavoritesLS = LSData.favorites.includes(id)
+      ? LSData.favorites.filter((favId) => favId !== id)
+      : [...LSData.favorites, id];
+    LSData.favorites = [...updatedFavoritesLS];
+    localStorage.setItem("LSData", JSON.stringify(LSData));
+    setFavorites(updatedFavoritesLS)
+  };
+  const checkFavorite = (id) => {
+    const LSData = JSON.parse(localStorage.getItem("LSData")) || {};
+    return LSData.favorites.includes(id);
+  };
   const value = {
     user: state.user,
     oneUser: state.oneUser,
@@ -147,6 +163,9 @@ const AuthContext = ({ children }) => {
     activateUser,
     getUsers,
     getOneUser,
+    toggleFavorite,
+    checkFavorite,
+    LSData: favorites
   };
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };
