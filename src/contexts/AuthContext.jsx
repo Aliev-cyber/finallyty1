@@ -146,10 +146,12 @@ const AuthContext = ({ children }) => {
       : [...LSData.favorites, id];
     LSData.favorites = [...updatedFavoritesLS];
     localStorage.setItem("LSData", JSON.stringify(LSData));
-    setFavorites(updatedFavoritesLS)
+    setFavorites(updatedFavoritesLS);
   };
   const checkFavorite = (id) => {
-    const LSData = JSON.parse(localStorage.getItem("LSData")) || {};
+    const LSData = JSON.parse(localStorage.getItem("LSData")) || {
+      favorites: [],
+    };
     return LSData.favorites.includes(id);
   };
   const value = {
@@ -165,7 +167,7 @@ const AuthContext = ({ children }) => {
     getOneUser,
     toggleFavorite,
     checkFavorite,
-    LSData: favorites
+    LSData: favorites,
   };
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };
