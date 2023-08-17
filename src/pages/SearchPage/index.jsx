@@ -113,7 +113,7 @@ const SearchPage = () => {
                 className="card"
                 key={index}
                 style={{ background: card.color }}
-                onClick={() => navigate(`/library/${card.id}`)}
+                onClick={() => navigate(`/tracks/${card.id}`)}
               >
                 <div className="logo">
                   <h1>{card.id}</h1>

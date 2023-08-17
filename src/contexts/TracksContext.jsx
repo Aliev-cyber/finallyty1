@@ -123,6 +123,11 @@ const TracksContext = ({ children }) => {
       payload: null,
     });
   }
+  function calculateMedian(arr) {
+    const totalSum = arr.reduce((sum, element) => sum + element.value, 0);
+    const median = Math.ceil(totalSum / arr.length);
+    return median;
+  }
   async function rateTrack(trackId, username, value) {
     try {
       const trackResponse = await axios.get(`${API}/${trackId}`);
@@ -137,17 +142,31 @@ const TracksContext = ({ children }) => {
           ...track.rating,
           { username: username, value: value },
         ];
+        const top = calculateMedian(updatedRating);
         await axios.patch(`${API}/${trackId}`, {
           rating: updatedRating,
+          top: top,
         });
         getOneTrack(trackId);
       } else {
-        const updatedRating = [...track.rating];
-        updatedRating[existingRatingIndex].value = value;
-
-        await axios.patch(`${API}/${trackId}`, {
-          rating: updatedRating,
-        });
+        if (typeof value === "number" && (value >= 0 || value <= 5)) {
+          const updatedRating = [...track.rating];
+          updatedRating[existingRatingIndex].value = value;
+          const top = calculateMedian(updatedRating);
+          await axios.patch(`${API}/${trackId}`, {
+            rating: updatedRating,
+            top: top,
+          });
+        } else {
+          const updatedRating = track.rating.filter(
+            (rating) => rating.username !== username
+          );
+          const top = calculateMedian(updatedRating);
+          await axios.patch(`${API}/${trackId}`, {
+            rating: updatedRating,
+            top: top,
+          });
+        }
         getOneTrack(trackId);
       }
     } catch (error) {
@@ -169,7 +188,7 @@ const TracksContext = ({ children }) => {
     getOneTrack,
     playTrack,
     clearURL,
-    rateTrack
+    rateTrack,
   };
   return (
     <tracksContext.Provider value={value}>{children}</tracksContext.Provider>
