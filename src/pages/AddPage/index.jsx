@@ -7,8 +7,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 const AddPage = () => {
   const { user } = useAuthContext();
   const { createTrack } = useTracksContext();
-  const [image, setImage] = useState()
-  const navigate = useNavigate()
+  const [image, setImage] = useState();
+  const navigate = useNavigate();
   if (!user || !user.is_staff) {
     return <Navigate to="/" />;
   }
@@ -27,7 +27,8 @@ const AddPage = () => {
     "Jazz",
   ];
   function isValidYouTubeUrl(url) {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+(&\S*)?$/;
+    const youtubeRegex =
+      /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+(&\S*)?$/;
     return youtubeRegex.test(url);
   }
 
@@ -37,9 +38,11 @@ const AddPage = () => {
 
     const testImage = new Image();
     testImage.src = data.get("image");
-    setImage(testImage.src)
+    setImage(testImage.src);
     testImage.onerror = () => {
-      setImage("https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif")
+      setImage(
+        "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif"
+      );
     };
 
     const response = {
@@ -48,11 +51,13 @@ const AddPage = () => {
       lyrics: data.get("lyrics"),
       genre: data.get("genre"),
       cover_image: image,
-      audio_file: isValidYouTubeUrl(data.get("audio"))? data.get("audio"):"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
+      audio_file: isValidYouTubeUrl(data.get("audio"))
+        ? data.get("audio")
+        : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       release_year: +data.get("release"),
       duration_seconds: +data.get("duration"),
       rating: [],
-      top: 0
+      top: 0,
     };
     let isValid = true;
     for (let key in response) {
@@ -67,7 +72,7 @@ const AddPage = () => {
       return;
     }
     createTrack(response);
-    navigate('/library')
+    navigate("/library");
   }
   return (
     <div className="add-page">

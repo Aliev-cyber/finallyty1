@@ -1,39 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Modal, Typography, TextField, Select, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTracksContext } from "../../contexts/TracksContext";
 
 const genres = [
-    "Charts",
-    "Events",
-    "At Home",
-    "Eras",
-    "Hip-Hop",
-    "Wellness",
-    "Workout",
-    "Relax",
-    "Focus",
-    "Sleep",
-    "Dance",
-    "Jazz",
-  ]
+  "Charts",
+  "Events",
+  "At Home",
+  "Eras",
+  "Hip-Hop",
+  "Wellness",
+  "Workout",
+  "Relax",
+  "Focus",
+  "Sleep",
+  "Dance",
+  "Jazz",
+];
 const EditModal = ({ open, setOpen, track }) => {
   const navigate = useNavigate();
   const { editTrack, getOneTrack, oneTrack } = useTracksContext();
-  const [editedTrack, setEditedTrack] = useState({...track});
-  const [image, setImage] = useState()
+  const [editedTrack, setEditedTrack] = useState({ ...track });
+  const [image, setImage] = useState();
 
   useEffect(() => {
     getOneTrack(track.id);
   }, [track.id]);
-  
+
   useEffect(() => {
     if (oneTrack) {
       setEditedTrack({ ...oneTrack });
     }
   }, [oneTrack]);
   function isValidYouTubeUrl(url) {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+(&\S*)?$/;
+    const youtubeRegex =
+      /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+(&\S*)?$/;
     return youtubeRegex.test(url);
   }
   const handleChange = (event) => {
@@ -46,13 +55,21 @@ const EditModal = ({ open, setOpen, track }) => {
 
   const handleEdit = () => {
     const testImage = new Image();
-    testImage.src = editedTrack.cover_image
-    setImage(testImage.src)
+    testImage.src = editedTrack.cover_image;
+    setImage(testImage.src);
     testImage.onerror = () => {
-      setImage("https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif")
+      setImage(
+        "https://gifdb.com/images/high/static-glitch-image-not-found-labitbee4o34s4cs.gif"
+      );
     };
 
-    editTrack(track.id,{...editedTrack, cover_image: image,audio_file: isValidYouTubeUrl(editedTrack.audio_file)?(editedTrack.audio_file):("https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D")});
+    editTrack(track.id, {
+      ...editedTrack,
+      cover_image: image,
+      audio_file: isValidYouTubeUrl(editedTrack.audio_file)
+        ? editedTrack.audio_file
+        : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
+    });
     navigate(`/details/${track.id}`);
     handleClose();
   };
@@ -100,7 +117,6 @@ const EditModal = ({ open, setOpen, track }) => {
           name="lyrics"
           value={editedTrack.lyrics}
           onChange={handleChange}
-          multiline
           fullWidth
           sx={{ marginBottom: "1rem" }}
         />
