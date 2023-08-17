@@ -9,10 +9,10 @@ const Profile = () => {
   const { username } = useParams();
   const { getOneUser, oneUser } = useAuthContext();
   const { comments, getComments } = useCommentContext();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   function handleLink(id) {
-    navigate(`/details/${id}`)
+    navigate(`/details/${id}`);
   }
   useEffect(() => {
     getOneUser(username);
@@ -21,7 +21,7 @@ const Profile = () => {
   useEffect(() => {
     if (oneUser) {
       setUser({ ...oneUser });
-      getComments("user.username", user.username);
+      getComments(`user.username`, oneUser.username);
     }
   }, [oneUser]);
 
@@ -51,7 +51,9 @@ const Profile = () => {
                 variant="subtitle1"
                 style={{ color: "#888", fontSize: "1.5rem" }}
               >
-                {user.date_joined ? `Joined on ${user.date_joined.slice(0, 10)}` : ""}
+                {user.date_joined
+                  ? `Joined on ${user.date_joined.slice(0, 10)}`
+                  : ""}
               </Typography>
             </div>
           </Box>
@@ -75,7 +77,11 @@ const Profile = () => {
           </div>
         </Paper>
         <Grid item xs={12} md={8}>
-          <Typography variant="h2" fontSize={"3rem"} sx={{ padding: "1.5rem", color:'white' }}>
+          <Typography
+            variant="h2"
+            fontSize={"3rem"}
+            sx={{ padding: "1.5rem", color: "white" }}
+          >
             {user && user.username}'s comments
           </Typography>
           <Paper sx={{ padding: "1rem" }}>

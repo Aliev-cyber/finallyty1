@@ -90,7 +90,9 @@ const DetailsPage = () => {
     }
   };
   useEffect(() => {
-    rateTrack(track.id, user.username, rating);
+    if (user) {
+      rateTrack(track.id, user.username, rating);
+    }
   }, [rating]);
   return (
     <div className="liked-songs-container">
@@ -99,7 +101,7 @@ const DetailsPage = () => {
         <h1 className="app-header">
           {`${track.title} by ${"aaaaaaaaaaaaaaaaaaaaaaaaa"}`.slice(0, 18)}
         </h1>
-        <h4 style={{fontSize:'2rem'}}>
+        <h4 style={{ fontSize: "2rem" }}>
           {`This track has been rated at ${track.top}/5 by the users`}
         </h4>
       </header>
