@@ -125,8 +125,8 @@ const TracksContext = ({ children }) => {
   }
   function calculateMedian(arr) {
     const totalSum = arr.reduce((sum, element) => sum + element.value, 0);
-    const median = Math.ceil(totalSum / arr.length);
-    return median;
+    const median = totalSum / arr.length;
+    return parseFloat(median.toFixed(1));
   }
   async function rateTrack(trackId, username, value) {
     try {

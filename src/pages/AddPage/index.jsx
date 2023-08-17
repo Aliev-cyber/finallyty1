@@ -51,11 +51,13 @@ const AddPage = () => {
       audio_file: isValidYouTubeUrl(data.get("audio"))? data.get("audio"):"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D",
       release_year: +data.get("release"),
       duration_seconds: +data.get("duration"),
+      rating: [],
+      top: 0
     };
     let isValid = true;
     for (let key in response) {
       console.log(response[key]);
-      if (!response[key]) {
+      if (key !== "top" && !response[key]) {
         isValid = false;
         break;
       }

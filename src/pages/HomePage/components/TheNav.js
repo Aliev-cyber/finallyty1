@@ -40,31 +40,6 @@ function TheNav({ showPopover }) {
         );
       },
     },
-    {
-      label: "Liked Songs",
-      classes: navItemClasses,
-      icon: <HeartIcon className="h-6 w-6" />,
-      link: "/liked",
-      action: (target) => {
-        let offset = null;
-
-        if (window.innerWidth >= MIN_DESKTOP_WIDTH) {
-          const { top, right, height } = target.getBoundingClientRect();
-
-          offset = {
-            top: top - (height / 3) * 2,
-            left: right + 130,
-          };
-        }
-
-        showPopover(
-          "Enjoy your Liked Songs",
-          "Log in to see all the songs you've liked in one easy playlist.",
-          target,
-          offset
-        );
-      },
-    },
   ];
 
   return (

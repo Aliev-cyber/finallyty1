@@ -99,6 +99,9 @@ const DetailsPage = () => {
         <h1 className="app-header">
           {`${track.title} by ${"aaaaaaaaaaaaaaaaaaaaaaaaa"}`.slice(0, 18)}
         </h1>
+        <h4 style={{fontSize:'2rem'}}>
+          {`This track has been rated at ${track.top}/5 by the users`}
+        </h4>
       </header>
       <Box
         sx={{
