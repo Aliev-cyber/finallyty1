@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   IconButton,
+  Rating,
   TextField,
   Typography,
 } from "@mui/material";
@@ -23,7 +24,8 @@ import { useCommentContext } from "../../contexts/CommentContext";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const DetailsPage = () => {
-  const { getOneTrack, oneTrack, clearURL, playTrack } = useTracksContext();
+  const { getOneTrack, oneTrack, clearURL, playTrack, rateTrack } =
+    useTracksContext();
   const { user } = useAuthContext();
   const { comments, addComment } = useCommentContext();
   const [track, setTrack] = useState({});
@@ -58,7 +60,7 @@ const DetailsPage = () => {
     setOpenEditModal(true);
   }
   const handleAddComment = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!user) {
       navigate("/auth");
       return;
@@ -81,6 +83,15 @@ const DetailsPage = () => {
     );
     setNewComment("");
   };
+  const [rating, setRating] = useState();
+  const handleRating = (e, v) => {
+    if (user) {
+      setRating(v);
+    }
+  };
+  useEffect(() => {
+    rateTrack(track.id, user.username, rating);
+  }, [rating]);
   return (
     <div className="liked-songs-container">
       <header className="app-header">
@@ -106,14 +117,24 @@ const DetailsPage = () => {
           <div className="play-all-icon" onClick={handleClick}>
             <PlayCircleIcon className="icon-larger" />
           </div>
-          {user && user.is_staff && (
+          {user && (
             <div style={{ margin: "0 2rem" }}>
-              <IconButton onClick={handleDelete} style={{ color: "red" }}>
-                <DeleteIcon sx={{ fontSize: "4rem" }} />
-              </IconButton>
-              <IconButton onClick={handleEdit} style={{ color: "green" }}>
-                <EditIcon sx={{ fontSize: "4rem" }} />
-              </IconButton>
+              {user.is_staff && (
+                <IconButton onClick={handleDelete} style={{ color: "red" }}>
+                  <DeleteIcon sx={{ fontSize: "4rem" }} />
+                </IconButton>
+              )}
+              {user.is_staff && (
+                <IconButton onClick={handleEdit} style={{ color: "green" }}>
+                  <EditIcon sx={{ fontSize: "4rem" }} />
+                </IconButton>
+              )}
+              <Rating
+                name="simple-controlled"
+                value={rating}
+                onChange={handleRating}
+                sx={{ background: "white", fontSize: "2rem", margin: "1rem" }}
+              />
             </div>
           )}
         </Box>
@@ -144,7 +165,10 @@ const DetailsPage = () => {
       </Box>
       <Box sx={{ width: "80%", margin: "2rem auto" }}>
         <Box sx={{ my: 3 }}>
-          <form style={{ display: "flex", alignItems: "center" }} onSubmit={handleAddComment}>
+          <form
+            style={{ display: "flex", alignItems: "center" }}
+            onSubmit={handleAddComment}
+          >
             <TextField
               label="Add Comment"
               variant="outlined"
@@ -153,7 +177,7 @@ const DetailsPage = () => {
               onChange={(e) => setNewComment(e.target.value)}
               sx={{
                 "& .MuiInputBase-input": {
-                  background:'white'
+                  background: "white",
                 },
               }}
             />

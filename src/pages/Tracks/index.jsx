@@ -12,7 +12,6 @@ const Tracks = () => {
   const { genre } = useParams();
   useEffect(() => {
     const currentParams = Object.fromEntries([...searchParams]);
-    setPage(1)
     if (genre) {
       setSearchParams({
         ...currentParams,
@@ -34,7 +33,7 @@ const Tracks = () => {
   return (
     <div>
       <h1 style={{ fontSize: "4rem", color: "white", margin: "3rem 25%" }}>
-        Welcome to your Library
+        All Tracks
       </h1>
       <Grid container spacing={2}>
         {tracks &&
