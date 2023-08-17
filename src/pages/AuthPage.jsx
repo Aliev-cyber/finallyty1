@@ -48,6 +48,7 @@ export default function SignUp() {
       email: data.get("email"),
       password: data.get("password"),
       password_confirmation: data.get("password_confirm"),
+      avatar: data.get("avatar"),
     });
     navigate("/")
   };
@@ -110,6 +111,17 @@ export default function SignUp() {
                   placeholder="Email Address"
                   name="email"
                   autoComplete="email"
+                  sx={{ background: "white" }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="avatar"
+                  placeholder="Avatar URL"
+                  name="avatar"
+                  autoComplete="avatar"
                   sx={{ background: "white" }}
                 />
               </Grid>

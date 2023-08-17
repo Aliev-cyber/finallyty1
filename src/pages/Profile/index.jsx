@@ -36,7 +36,7 @@ const Profile = () => {
                 height: "120px",
                 marginRight: "2rem",
               }}
-              src="/google.com"
+              src={user && user.avatar}
             >
               {user && user.username ? user.username[0].toUpperCase() : ""}
             </Avatar>
